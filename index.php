@@ -1,10 +1,8 @@
 <?php
 
-use IanLessa\ProductSearch\Database\MySQL;
 use IanLessa\ProductSearch\Pagination;
 use IanLessa\ProductSearch\Repositories\Product as ProductRepository;
 use IanLessa\ProductSearch\Search;
-use IanLessa\ProductSearch\SearchResult;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
@@ -24,14 +22,15 @@ $app->get(/**
 
     $params = new stdClass;
     $params->term = $getQuery["q"];
-    $params->filter = explode(":", $getQuery["filter"]);
-    $params->filter = [$params->filter[0] => $params->filter[1]];
+    $filter = $getQuery["filter"] ;
+    $filter = explode(":", $filter);
+    $filter = [$filter[0] => $filter[1]];
     $params->sort = ['desc' => 'id'];
-    $params->match = ['name', 'description'];
 
     $term = $getQuery["q"];
-    $matches = [];
-    $filters = [];
+    $matches = ["name"];
+    $filters = $filter;
+
 
     $pagination = new Pagination(
         $getQuery["start_page"],

@@ -3,8 +3,6 @@ namespace IanLessa\ProductSearch\Repositories;
 
 use IanLessa\ProductSearch\Aggregates\Brand;
 use IanLessa\ProductSearch\Aggregates\Product as ProductEntity;
-use IanLessa\ProductSearch\Interfaces\DatabaseInterface;
-use IanLessa\ProductSearch\Pagination;
 use IanLessa\ProductSearch\Search;
 use IanLessa\ProductSearch\SearchResult;
 use PDO;
@@ -25,33 +23,91 @@ class Product
 
     public function fetch(Search $search) : SearchResult
     {
-        $baseQuery = "
+        $query = $this->getBaseQuery();//"$baseQuery $whereQuery $paginationQuery";
+        $query .= $this->getWhereQuery($search);
+        $query .= $this->getPaginationQuery($search);
+
+        $statement = $this->pdo->prepare($query);
+
+        $statement->execute();
+
+        return $this->formatResults($search, $statement->fetchAll());
+    }
+
+    private function getBaseQuery() : string
+    {
+        return "
             SELECT 
               p.*, 
               b.name as brand,
               b.id as brand_id 
             FROM 
-              product AS p 
+              product as p
                 INNER JOIN 
-                  brand AS b ON p.brand_id = b.id            
+                  brand as b ON p.brand_id = b.id            
         ";
+    }
 
+    private function getMatchQueryForName(string $term) : string
+    {
+        return "LOWER(p.name) LIKE LOWER('%$term%')";
+    }
+
+    private function getMatchQueryForDescription(string $term) : string
+    {
+        return "LOWER(p.description) LIKE LOWER('%$term%')";
+    }
+
+    private function getWhereQuery(Search $search) : string
+    {
+        $sections = [];
+        $matchQuery = '';
+        foreach ($search->getMatches() as $match) {
+            $handler = "getMatchQueryFor" . ucfirst($match);
+            if (method_exists($this, $handler)) {
+                $matchQuery .= $this->$handler($search->getTerm()) . " OR ";
+            }
+        }
+        $matchQuery = rtrim($matchQuery, 'OR ');
+        $sections[] = $matchQuery;
+
+        $filterQuery = '';
+        foreach ($search->getFilters() as $column => $filter)
+        {
+            $filterQuery .= "LOWER(b.name) like LOWER('%{$filter}%') AND";
+        }
+        $filterQuery = rtrim($filterQuery, 'AND');
+        $sections[] = $filterQuery;
+
+        $sections = array_filter($sections, function($section){
+           return strlen($section) > 0;
+        });
+
+        $matchQuery = '';
+        foreach ($sections as $section) {
+            $matchQuery .= "($section) AND ";
+        }
+        $matchQuery = rtrim($matchQuery, "AND ");
+        if (strlen($matchQuery) > 0) {
+            return "WHERE $matchQuery";
+        }
+
+        return "";
+    }
+
+    private function getPaginationQuery(Search $search) : string
+    {
         $limit = $search->getPagination()->getPerPage();
         $offset = $limit * $search->getPagination()->getStart();
 
-        $paginationQuery = "
+        return "
             LIMIT $limit
             OFFSET $offset
         ";
+    }
 
-        $query = "$baseQuery $paginationQuery";
-
-        $statement = $this->pdo->prepare($query);
-
-        $statement->execute();
-        $data = $statement->fetchAll();
-
-
+    private function formatResults(Search $search, array $data) : SearchResult
+    {
         $results = [];
         foreach ($data as $row) {
             $product = new ProductEntity();
@@ -67,16 +123,9 @@ class Product
             $results[] = $product;
         }
 
-        $results = new SearchResult(
+        return new SearchResult(
             $search,
             $results
         );
-
-        return $results;
-    }
-
-    /** @todo remove me! */
-    public function __call($name, $arguments)
-    {
     }
 }

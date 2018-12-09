@@ -9,7 +9,7 @@ final class Search implements \JsonSerializable
      */
     private $term;
     /**
-     * @var Match[]
+     * @var string[]
      */
     private $matches;
     /**
@@ -27,7 +27,7 @@ final class Search implements \JsonSerializable
     /**
      * Search constructor.
      * @param string $term
-     * @param Match[] $matches
+     * @param string[] $matches
      * @param Filter[] $filters
      * @param Pagination $pagination
      * @param Sort $sort
@@ -67,9 +67,12 @@ final class Search implements \JsonSerializable
     /**
      * @return Match[]
      */
-    public function getMatches(): ?array
+    public function getMatches(): array
     {
-        return $this->matches ?? [];
+        if ($this->term !== null) {
+            return $this->matches ?? [];
+        }
+        return [];
     }
 
     /**
@@ -85,7 +88,7 @@ final class Search implements \JsonSerializable
     /**
      * @return Filter[]
      */
-    public function getFilters(): ?array
+    public function getFilters(): array
     {
         return $this->filters ?? [];
     }
@@ -94,7 +97,7 @@ final class Search implements \JsonSerializable
      * @param Filter[] $filters
      * @return Search
      */
-    public function setFilters(array $filters): Search
+    public function setFilters(?array $filters): Search
     {
         $this->filters = $filters;
         return $this;
