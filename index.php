@@ -11,9 +11,7 @@ $app = new \Slim\App;
 $app->get('/products', function (Request $request, Response $response, array $args) {
     $params = $request->getQueryParams();
 
-    $prodRepo = new ProductRepository(
-        new MySQL
-    );
+    $prodRepo = new ProductRepository();
 
     $resp = new stdClass;
     $resp->results = $prodRepo->search();;

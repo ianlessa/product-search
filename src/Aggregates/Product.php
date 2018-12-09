@@ -58,6 +58,7 @@ class Product extends AbstractEntity
     {
         $data = new \stdClass;
 
+        $data->id = $this->id;
         $data->name = $this->name;
         $data->description = $this->description;
 

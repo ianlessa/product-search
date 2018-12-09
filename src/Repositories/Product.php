@@ -7,12 +7,16 @@ use PDO;
 
 class Product
 {
-    /** @var DatabaseInterface */
-    private $database;
+    /** @var PDO */
+    private $pdo;
 
-    public function __construct(DatabaseInterface $database)
+    public function __construct()
     {
-        $this->database = $database;
+        $dsn = 'mysql:host=localhost;dbname=product_search';
+        $username = 'ian';
+        $password = 'root';
+
+        $this->pdo = new PDO($dsn, $username, $password);
     }
 
     public function find(string $id) : ProductEntity
@@ -84,5 +88,46 @@ class Product
         }
 
         return $results;
+    }
+
+    public function fetch() : array
+    {
+        $baseQuery = "
+            SELECT 
+              p.*, 
+              b.name as brand 
+            FROM 
+              product AS p 
+                INNER JOIN 
+                  brand AS b ON p.brand_id = b.id            
+        ";
+
+        $pagination = "LIMIT 3 OFFSET 4";
+
+        $query = "$baseQuery $pagination";
+
+        $statement = $this->pdo->prepare($query);
+
+        $statement->execute();
+        $data = $statement->fetchAll();
+
+
+        $results = [];
+        foreach ($data as $row) {
+            $product = new ProductEntity();
+            $product->setId($row['id']);
+            $product->setName($row['name']);
+            $product->setDescription($row['description']);
+
+            $results[] = $product;
+        }
+
+        return $results;
+
+    }
+
+    /** @todo remove me! */
+    public function __call($name, $arguments)
+    {
     }
 }
