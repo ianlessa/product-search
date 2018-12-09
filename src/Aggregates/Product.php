@@ -8,6 +8,8 @@ class Product extends AbstractEntity
 {
     /** @var string */
     private $name;
+    /** @var Brand */
+    private $brand;
     /** @var string */
     private $description;
 
@@ -26,6 +28,24 @@ class Product extends AbstractEntity
     public function setName(string $name): Product
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return Brand
+     */
+    public function getBrand(): Brand
+    {
+        return $this->brand;
+    }
+
+    /**
+     * @param Brand $brand
+     * @return Product
+     */
+    public function setBrand(Brand $brand): Product
+    {
+        $this->brand = $brand;
         return $this;
     }
 
@@ -58,9 +78,10 @@ class Product extends AbstractEntity
     {
         $data = new \stdClass;
 
-        $data->id = $this->id;
-        $data->name = $this->name;
-        $data->description = $this->description;
+        $data->id = $this->getId();
+        $data->name = $this->getName();
+        $data->brand = $this->getBrand();
+        $data->description = $this->getDescription();
 
         return $data;
     }

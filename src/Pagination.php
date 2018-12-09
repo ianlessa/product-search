@@ -6,6 +6,9 @@ use IanLessa\ProductSearch\Exceptions\InvalidParamException;
 
 class Pagination extends AbstractValueObject
 {
+    const DEFAULT_START = 0;
+    const DEFAULT_PERPAGE = 5;
+
     /** @var int */
     private $start;
     /** @var int */
@@ -13,13 +16,16 @@ class Pagination extends AbstractValueObject
 
     public function __construct($start, $perPage)
     {
-        $this->setStart($start);
-        $this->setPerPage($perPage);
+        $this->setStart($start ?? self::DEFAULT_START);
+        $this->setPerPage($perPage ?? self::DEFAULT_PERPAGE);
     }
 
     static public function default()
     {
-        return new self(5, 1);
+        return new self(
+            self::DEFAULT_START,
+            self::DEFAULT_PERPAGE
+        );
     }
 
     /**
@@ -36,8 +42,8 @@ class Pagination extends AbstractValueObject
      */
     private function setStart(int $start): Pagination
     {
-        if ($start < 1) {
-            throw new InvalidParamException("Start should be greater than 1!", $start);
+        if ($start < 0) {
+            throw new InvalidParamException("Start should be greater than 0!", $start);
         }
 
         $this->start = $start;

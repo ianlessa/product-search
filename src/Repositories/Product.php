@@ -1,8 +1,12 @@
 <?php
 namespace IanLessa\ProductSearch\Repositories;
 
+use IanLessa\ProductSearch\Aggregates\Brand;
 use IanLessa\ProductSearch\Aggregates\Product as ProductEntity;
 use IanLessa\ProductSearch\Interfaces\DatabaseInterface;
+use IanLessa\ProductSearch\Pagination;
+use IanLessa\ProductSearch\Search;
+use IanLessa\ProductSearch\SearchResult;
 use PDO;
 
 class Product
@@ -19,92 +23,28 @@ class Product
         $this->pdo = new PDO($dsn, $username, $password);
     }
 
-    public function find(string $id) : ProductEntity
-    {
-        $dsn = 'mysql:host=localhost;dbname=product_search';
-        $username = 'ian';
-        $password = 'root';
-
-        $dbh = new PDO($dsn, $username, $password);
-
-        $stmt = $dbh->prepare("
-            SELECT 
-              p.*, 
-              b.name as brand 
-            FROM 
-              product AS p 
-                INNER JOIN 
-                  brand AS b ON p.brand_id = b.id 
-            WHERE 
-              p.id = :product_id
-        ");
-
-        $stmt->bindParam(":product_id", $id, PDO::PARAM_INT );
-
-        $stmt->execute();
-
-        $result = $stmt->fetch();
-
-        $product = new ProductEntity();
-        $product->setId($result['id']);
-        $product->setName($result['name']);
-        $product->setDescription($result['description']);
-
-        return $product;
-    }
-
-    public function search() : array
-    {
-        $dsn = 'mysql:host=localhost;dbname=product_search';
-        $username = 'ian';
-        $password = 'root';
-
-        $dbh = new PDO($dsn, $username, $password);
-
-        $stmt = $dbh->prepare("
-            SELECT 
-              p.*, 
-              b.name as brand 
-            FROM 
-              product AS p 
-                INNER JOIN 
-                  brand AS b ON p.brand_id = b.id            
-        ");
-
-        $stmt->bindParam(":product_id", $id, PDO::PARAM_INT );
-
-        $stmt->execute();
-
-        $data = $stmt->fetchAll();
-
-        $results = [];
-        foreach ($data as $row) {
-            $product = new ProductEntity();
-            $product->setId($row['id']);
-            $product->setName($row['name']);
-            $product->setDescription($row['description']);
-
-            $results[] = $product;
-        }
-
-        return $results;
-    }
-
-    public function fetch() : array
+    public function fetch(Search $search) : SearchResult
     {
         $baseQuery = "
             SELECT 
               p.*, 
-              b.name as brand 
+              b.name as brand,
+              b.id as brand_id 
             FROM 
               product AS p 
                 INNER JOIN 
                   brand AS b ON p.brand_id = b.id            
         ";
 
-        $pagination = "LIMIT 3 OFFSET 4";
+        $limit = $search->getPagination()->getPerPage();
+        $offset = $limit * $search->getPagination()->getStart();
 
-        $query = "$baseQuery $pagination";
+        $paginationQuery = "
+            LIMIT $limit
+            OFFSET $offset
+        ";
+
+        $query = "$baseQuery $paginationQuery";
 
         $statement = $this->pdo->prepare($query);
 
@@ -119,11 +59,20 @@ class Product
             $product->setName($row['name']);
             $product->setDescription($row['description']);
 
+            $brand = new Brand($row['brand']);
+            $brand->setId($row['brand_id']);
+
+            $product->setBrand($brand);
+
             $results[] = $product;
         }
 
-        return $results;
+        $results = new SearchResult(
+            $search,
+            $results
+        );
 
+        return $results;
     }
 
     /** @todo remove me! */
