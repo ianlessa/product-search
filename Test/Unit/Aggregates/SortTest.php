@@ -115,7 +115,9 @@ class SortTest extends TestCase
     {
         $sort1 = Sort::asc('test');
         $sort2 = Sort::asc('test');
+        $sort3 = Sort::asc('notTest');
 
         $this->assertTrue($sort1->equals($sort2));
+        $this->assertFalse($sort1->equals($sort3));
     }
 }

@@ -143,9 +143,9 @@ class PaginationTest extends TestCase
     {
         $pagination1 = Pagination::default();
         $pagination2 = Pagination::default();
+        $pagination3 = new Pagination($this->sampleStart, $this->samplePerPage);
 
         $this->assertTrue($pagination1->equals($pagination2));
-
+        $this->assertFalse($pagination1->equals($pagination3));
     }
-
 }
