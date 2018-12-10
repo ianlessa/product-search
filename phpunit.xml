@@ -10,6 +10,6 @@
          verbose="true"
 >
     <testsuite name="Temp Test Suite Name">
-        <directory>tests/*</directory>
+        <directory>Test/*</directory>
     </testsuite>
 </phpunit>

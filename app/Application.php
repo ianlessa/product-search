@@ -14,6 +14,8 @@ final class Application
 {
     /** @var Application */
     static private $instance;
+    /** @var bool */
+    static private $alreadyRan;
     /**
      * @var \Slim\App
      */
@@ -24,12 +26,21 @@ final class Application
         $this->slimApp = new \Slim\App;
     }
 
-    static public function run()
+    static public function getInstance()
     {
         if (self::$instance === null) {
             self::$instance = new self;
-            self::$instance->setupRoutes();
-            self::$instance->slimApp->run();
+        }
+        return self::$instance;
+    }
+
+    static public function run()
+    {
+        if (self::$alreadyRan === null) {
+            self::$alreadyRan = true;
+            $instance = self::getInstance();
+            $instance->setupRoutes();
+            $instance->slimApp->run();
         }
     }
 
@@ -51,7 +62,7 @@ final class Application
         });
     }
 
-    private function createSearchFromGet($params) : Search
+    public function createSearchFromGet($params) : Search
     {
         try {
             $filters = [];
@@ -93,7 +104,7 @@ final class Application
         }
     }
 
-    private function createProductRepository()
+    public function createProductRepository()
     {
         return new ProductRepository(
             'localhost',
