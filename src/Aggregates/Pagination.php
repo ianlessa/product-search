@@ -48,7 +48,7 @@ class Pagination extends AbstractValueObject
     private function setStart(int $start): Pagination
     {
         if ($start < 0) {
-            throw new InvalidParamException("Start should be greater than 0!", $start);
+            throw new InvalidParamException("Start should be at least 0!", $start);
         }
 
         $this->start = $start;
@@ -69,7 +69,7 @@ class Pagination extends AbstractValueObject
      */
     private function setPerPage(int $perPage): Pagination
     {
-        if ($perPage < 0) {
+        if ($perPage <= 0) {
             throw new InvalidParamException("PerPage should be greater than 0!", $perPage);
         }
 
