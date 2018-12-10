@@ -12,4 +12,16 @@
     <testsuite name="Temp Test Suite Name">
         <directory>Test/*</directory>
     </testsuite>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
+            <directory suffix=".php">app</directory>
+            <exclude>
+                <directory suffix=".php">Test/*</directory>
+                <directory suffix=".php">vendor/*</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+
 </phpunit>

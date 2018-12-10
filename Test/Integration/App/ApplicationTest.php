@@ -26,6 +26,10 @@ class ApplicationTest extends TestCase
      * @test
      * @covers \IanLessa\ProductSearchApp\Application::createProductRepository
      *
+     * @uses \IanLessa\ProductSearchApp\Application::__construct
+     * @uses \IanLessa\ProductSearchApp\Application::getInstance()
+     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::__construct
+     *
      */
     public function createProductRepositoryShouldReturnMySQLProductRepository()
     {
@@ -38,6 +42,21 @@ class ApplicationTest extends TestCase
     /**
      * @test
      * @covers \IanLessa\ProductSearchApp\Application::createSearchFromGet
+     *
+     * @uses \IanLessa\ProductSearchApp\Application::__construct
+     * @uses \IanLessa\ProductSearchApp\Application::getInstance
+     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::__construct
+     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::default
+     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::setPerPage
+     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::setStart
+     * @uses \IanLessa\ProductSearch\Aggregates\Search::__construct
+     * @uses \IanLessa\ProductSearch\Aggregates\Search::setFilters
+     * @uses \IanLessa\ProductSearch\Aggregates\Search::setPagination
+     * @uses \IanLessa\ProductSearch\Aggregates\Search::setSort
+     * @uses \IanLessa\ProductSearch\Aggregates\Sort::__construct
+     * @uses \IanLessa\ProductSearch\Aggregates\Sort::asc
+     * @uses \IanLessa\ProductSearch\Aggregates\Sort::setType
+     * @uses \IanLessa\ProductSearch\Aggregates\Sort::setValue
      *
      */
     public function onCorrectParamsCreateSearchFromGetShouldReturnCorrectSearchObject()
@@ -65,6 +84,18 @@ class ApplicationTest extends TestCase
     /**
      * @test
      * @covers \IanLessa\ProductSearchApp\Application::createSearchFromGet
+     *
+     * @uses \IanLessa\ProductSearchApp\Application::__construct
+     * @uses \IanLessa\ProductSearchApp\Application::getInstance
+     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::__construct
+     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::default
+     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::setPerPage
+     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::setStart
+     * @uses \IanLessa\ProductSearch\Aggregates\Search::__construct
+     * @uses \IanLessa\ProductSearch\Aggregates\Search::setFilters
+     * @uses \IanLessa\ProductSearch\Aggregates\Search::setPagination
+     * @uses \IanLessa\ProductSearch\Aggregates\Search::setSort
+     * @uses \IanLessa\ProductSearch\Exceptions\InvalidParamException::__construct
      *
      */
     public function onIncorrectParamsCreateSearchFromGetShouldReturnDefaultSearchObject()
