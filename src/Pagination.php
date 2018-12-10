@@ -9,9 +9,13 @@ class Pagination extends AbstractValueObject
     const DEFAULT_START = 0;
     const DEFAULT_PERPAGE = 5;
 
-    /** @var int */
+    /**
+     * @var int 
+     */
     private $start;
-    /** @var int */
+    /**
+     * @var int 
+     */
     private $perPage;
 
     public function __construct($start, $perPage)
@@ -37,7 +41,7 @@ class Pagination extends AbstractValueObject
     }
 
     /**
-     * @param int $start
+     * @param  int $start
      * @return Pagination
      */
     private function setStart(int $start): Pagination
@@ -59,7 +63,7 @@ class Pagination extends AbstractValueObject
     }
 
     /**
-     * @param int $perPage
+     * @param  int $perPage
      * @return Pagination
      */
     private function setPerPage(int $perPage): Pagination
@@ -73,23 +77,23 @@ class Pagination extends AbstractValueObject
     }
 
     /**
-     * @param Pagination $object
+     * @param  Pagination $object
      * @return bool
      */
     protected function isEqual($object) : bool
     {
         return
             $this->getStart() === $object->getStart() &&
-            $this->getPerPage() === $object->getPerPage()
-        ;
+            $this->getPerPage() === $object->getPerPage();
     }
 
     /**
      * Specify data which should be serialized to JSON
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     *
+     * @link   http://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return mixed data which can be serialized by <b>json_encode</b>,
      * which is a value of any type other than a resource.
-     * @since 5.4.0
+     * @since  5.4.0
      */
     public function jsonSerialize()
     {

@@ -7,13 +7,18 @@ class Sort extends AbstractValueObject
     const TYPE_ASC = 'ASC';
     const TYPE_DESC = 'DESC';
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $type;
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $value;
 
     /**
      * Sort constructor.
+     *
      * @param string $type
      * @param string $value
      */
@@ -23,11 +28,13 @@ class Sort extends AbstractValueObject
         $this->setValue($value);
     }
 
-    static public function asc($value) {
+    static public function asc($value)
+    {
         return new self(self::TYPE_ASC, $value);
     }
 
-    static public function desc($value) {
+    static public function desc($value)
+    {
         return new self(self::TYPE_DESC, $value);
     }
 
@@ -40,7 +47,7 @@ class Sort extends AbstractValueObject
     }
 
     /**
-     * @param string $type
+     * @param  string $type
      * @return Sort
      */
     private function setType(string $type): Sort
@@ -58,7 +65,7 @@ class Sort extends AbstractValueObject
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return Sort
      */
     private function setValue(string $value): Sort
@@ -68,23 +75,23 @@ class Sort extends AbstractValueObject
     }
 
     /**
-     * @param Sort $object
+     * @param  Sort $object
      * @return bool
      */
     protected function isEqual($object): bool
     {
         return
             $this->getValue() === $object->getValue() &&
-            $this->getType() === $object->getType()
-        ;
+            $this->getType() === $object->getType();
     }
 
     /**
      * Specify data which should be serialized to JSON
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     *
+     * @link   http://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return mixed data which can be serialized by <b>json_encode</b>,
      * which is a value of any type other than a resource.
-     * @since 5.4.0
+     * @since  5.4.0
      */
     public function jsonSerialize()
     {

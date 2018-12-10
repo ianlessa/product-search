@@ -6,7 +6,9 @@ use JsonSerializable;
 
 abstract class AbstractEntity implements JsonSerializable
 {
-    /** @var string */
+    /**
+     * @var string 
+     */
     protected $id;
 
     /**
@@ -18,7 +20,7 @@ abstract class AbstractEntity implements JsonSerializable
     }
 
     /**
-     * @param string $id
+     * @param  string $id
      * @return AbstractEntity
      */
     public function setId(string $id): AbstractEntity
@@ -28,7 +30,7 @@ abstract class AbstractEntity implements JsonSerializable
     }
 
     /**
-     * @param AbstractEntity $entity
+     * @param  AbstractEntity $entity
      * @return bool
      */
     public function equals(AbstractEntity $entity) : bool

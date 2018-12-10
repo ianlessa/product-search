@@ -11,7 +11,9 @@ use PDO;
 
 class Product implements RepositoryInterface
 {
-    /** @var PDO */
+    /**
+     * @var PDO 
+     */
     private $pdo;
 
     public function __construct(
@@ -19,8 +21,7 @@ class Product implements RepositoryInterface
         int $port,
         string $username,
         string $password
-    )
-    {
+    ) {
         $dsn = "mysql:host=$host;port=$port;dbname=product_search";
 
         $this->pdo = new PDO($dsn, $username, $password);

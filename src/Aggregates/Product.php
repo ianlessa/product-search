@@ -6,11 +6,17 @@ use IanLessa\ProductSearch\AbstractEntity;
 
 class Product extends AbstractEntity
 {
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $name;
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $brand;
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $description;
 
     /**
@@ -22,7 +28,7 @@ class Product extends AbstractEntity
     }
 
     /**
-     * @param string $name
+     * @param  string $name
      * @return Product
      */
     public function setName(string $name): Product
@@ -40,7 +46,7 @@ class Product extends AbstractEntity
     }
 
     /**
-     * @param string $brand
+     * @param  string $brand
      * @return Product
      */
     public function setBrand(string $brand): Product
@@ -58,7 +64,7 @@ class Product extends AbstractEntity
     }
 
     /**
-     * @param string $description
+     * @param  string $description
      * @return Product
      */
     public function setDescription(string $description): Product
@@ -69,10 +75,11 @@ class Product extends AbstractEntity
 
     /**
      * Specify data which should be serialized to JSON
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     *
+     * @link   http://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return mixed data which can be serialized by <b>json_encode</b>,
      * which is a value of any type other than a resource.
-     * @since 5.4.0
+     * @since  5.4.0
      */
     public function jsonSerialize()
     {

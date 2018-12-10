@@ -15,13 +15,16 @@ class SearchResult implements JsonSerializable
      */
     private $results;
 
-    /** @var int */
+    /**
+     * @var int 
+     */
     private $rowCount;
 
     /**
      * SearchResult constructor.
+     *
      * @param Search $search
-     * @param array $results
+     * @param array  $results
      */
     public function __construct(Search $search, array $results)
     {
@@ -38,7 +41,7 @@ class SearchResult implements JsonSerializable
     }
 
     /**
-     * @param Search $search
+     * @param  Search $search
      * @return SearchResult
      */
     public function setSearch(Search $search): SearchResult
@@ -56,7 +59,7 @@ class SearchResult implements JsonSerializable
     }
 
     /**
-     * @param array $results
+     * @param  array $results
      * @return SearchResult
      */
     public function setResults(array $results): SearchResult
@@ -75,10 +78,11 @@ class SearchResult implements JsonSerializable
 
     /**
      * Specify data which should be serialized to JSON
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     *
+     * @link   http://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return mixed data which can be serialized by <b>json_encode</b>,
      * which is a value of any type other than a resource.
-     * @since 5.4.0
+     * @since  5.4.0
      */
     public function jsonSerialize()
     {

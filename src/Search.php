@@ -13,14 +13,17 @@ final class Search implements \JsonSerializable
      */
     private $pagination;
 
-    /** @var Sort */
+    /**
+     * @var Sort 
+     */
     private $sort;
 
     /**
      * Search constructor.
-     * @param Filter[] $filters
+     *
+     * @param Filter[]   $filters
      * @param Pagination $pagination
-     * @param Sort $sort
+     * @param Sort       $sort
      */
     public function __construct(
         array $filters = null,
@@ -41,7 +44,7 @@ final class Search implements \JsonSerializable
     }
 
     /**
-     * @param Filter[] $filters
+     * @param  Filter[] $filters
      * @return Search
      */
     public function setFilters(?array $filters): Search
@@ -59,7 +62,7 @@ final class Search implements \JsonSerializable
     }
 
     /**
-     * @param Pagination $pagination
+     * @param  Pagination $pagination
      * @return Search
      */
     public function setPagination(?Pagination $pagination): Search
@@ -77,7 +80,7 @@ final class Search implements \JsonSerializable
     }
 
     /**
-     * @param Sort $sort
+     * @param  Sort $sort
      * @return Search
      */
     public function setSort(?Sort $sort): Search
@@ -88,10 +91,11 @@ final class Search implements \JsonSerializable
 
     /**
      * Specify data which should be serialized to JSON
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     *
+     * @link   http://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return mixed data which can be serialized by <b>json_encode</b>,
      * which is a value of any type other than a resource.
-     * @since 5.4.0
+     * @since  5.4.0
      */
     public function jsonSerialize()
     {
