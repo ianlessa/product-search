@@ -11,7 +11,8 @@ interface RepositoryInterface
         string $host,
         int $port,
         string $username,
-        string $password
+        string $password,
+        string $database
     );
     public function fetch(Search $search) : SearchResult;
 }

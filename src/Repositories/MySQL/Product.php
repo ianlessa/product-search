@@ -20,9 +20,10 @@ class Product implements RepositoryInterface
         string $host,
         int $port,
         string $username,
-        string $password
+        string $password,
+        string $database
     ) {
-        $dsn = "mysql:host=$host;port=$port;dbname=product_search";
+        $dsn = "mysql:host=$host;port=$port;dbname=$database";
 
         $this->pdo = new PDO($dsn, $username, $password);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
