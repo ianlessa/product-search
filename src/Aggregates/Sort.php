@@ -1,6 +1,8 @@
 <?php
 
-namespace IanLessa\ProductSearch;
+namespace IanLessa\ProductSearch\Aggregates;
+
+use IanLessa\ProductSearch\AbstractValueObject;
 
 class Sort extends AbstractValueObject
 {

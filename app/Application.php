@@ -2,11 +2,11 @@
 
 namespace IanLessa\ProductSearchApp;
 
-use IanLessa\ProductSearch\Pagination;
+use IanLessa\ProductSearch\Aggregates\Pagination;
 use IanLessa\ProductSearch\Repositories\MySQL\Product as ProductRepository;
-use IanLessa\ProductSearch\Search;
+use IanLessa\ProductSearch\Aggregates\Search;
 use IanLessa\ProductSearch\SearchService;
-use IanLessa\ProductSearch\Sort;
+use IanLessa\ProductSearch\Aggregates\Sort;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
@@ -56,7 +56,7 @@ final class Application
         try {
             $filters = [];
 
-            $term = $params["q"];
+            $term = $params["q"] ?? null;
 
             if ($term !== null) {
                 $filters['name'] = $term;
@@ -69,7 +69,7 @@ final class Application
             }
 
             $sort = null;
-            $baseSort = $params['sort'];
+            $baseSort = $params['sort'] ?? null;
             if (preg_match('/.{1}:.{1}/', $baseSort) > 0) {
                 $baseSort = explode(':', $baseSort);
                 $method = $baseSort[0];
@@ -79,8 +79,8 @@ final class Application
             }
 
             $pagination = new Pagination(
-                $params["start_page"],
-                $params["per_page"]
+                $params["start_page"] ?? null,
+                $params["per_page"] ?? null
             );
 
             return new Search(

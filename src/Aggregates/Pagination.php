@@ -1,7 +1,8 @@
 <?php
 
-namespace IanLessa\ProductSearch;
+namespace IanLessa\ProductSearch\Aggregates;
 
+use IanLessa\ProductSearch\AbstractValueObject;
 use IanLessa\ProductSearch\Exceptions\InvalidParamException;
 
 class Pagination extends AbstractValueObject

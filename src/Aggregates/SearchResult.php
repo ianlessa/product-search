@@ -1,6 +1,6 @@
 <?php
 
-namespace IanLessa\ProductSearch;
+namespace IanLessa\ProductSearch\Aggregates;
 
 use JsonSerializable;
 

@@ -2,8 +2,8 @@
 
 namespace IanLessa\ProductSearch\Interfaces;
 
-use IanLessa\ProductSearch\Search;
-use IanLessa\ProductSearch\SearchResult;
+use IanLessa\ProductSearch\Aggregates\Search;
+use IanLessa\ProductSearch\Aggregates\SearchResult;
 
 interface RepositoryInterface
 {

@@ -1,12 +1,10 @@
 <?php
 namespace IanLessa\ProductSearch\Repositories\MySQL;
 
-use IanLessa\ProductSearch\Aggregates\Brand;
 use IanLessa\ProductSearch\Aggregates\Product as ProductEntity;
 use IanLessa\ProductSearch\Interfaces\RepositoryInterface;
-use IanLessa\ProductSearch\Search;
-use IanLessa\ProductSearch\SearchResult;
-use IanLessa\ProductSearch\SearchService;
+use IanLessa\ProductSearch\Aggregates\Search;
+use IanLessa\ProductSearch\Aggregates\SearchResult;
 use PDO;
 
 class Product implements RepositoryInterface

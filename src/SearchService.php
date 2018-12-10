@@ -2,6 +2,8 @@
 
 namespace IanLessa\ProductSearch;
 
+use IanLessa\ProductSearch\Aggregates\Search;
+use IanLessa\ProductSearch\Aggregates\SearchResult;
 use IanLessa\ProductSearch\Interfaces\RepositoryInterface;
 
 class SearchService
