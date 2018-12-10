@@ -46,10 +46,17 @@ class Product implements RepositoryInterface
         return $this->formatResults($search, $statement->fetchAll());
     }
 
+    private function getMaxRows() : int
+    {
+        $result = $this->pdo->query("SELECT FOUND_ROWS()")->fetchAll();
+
+        return $result[0][0];
+    }
+
     private function getBaseQuery() : string
     {
         return "
-            SELECT 
+            SELECT SQL_CALC_FOUND_ROWS
               p.*
             FROM 
               product as p 
@@ -135,6 +142,7 @@ class Product implements RepositoryInterface
 
         return new SearchResult(
             $search,
+            $this->getMaxRows(),
             $results
         );
     }

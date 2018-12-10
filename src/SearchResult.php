@@ -21,14 +21,20 @@ class SearchResult implements JsonSerializable
     private $rowCount;
 
     /**
+     * @var int
+     */
+    private $maxRows;
+
+    /**
      * SearchResult constructor.
      *
      * @param Search $search
      * @param array  $results
      */
-    public function __construct(Search $search, array $results)
+    public function __construct(Search $search, int $maxRows, array $results)
     {
         $this->setSearch($search);
+        $this->setMaxRows($maxRows);
         $this->setResults($results);
     }
 
@@ -77,6 +83,24 @@ class SearchResult implements JsonSerializable
     }
 
     /**
+     * @return int
+     */
+    public function getMaxRows(): int
+    {
+        return $this->maxRows;
+    }
+
+    /**
+     * @param int $maxRows
+     * @return SearchResult
+     */
+    public function setMaxRows(int $maxRows): SearchResult
+    {
+        $this->maxRows = $maxRows;
+        return $this;
+    }
+
+    /**
      * Specify data which should be serialized to JSON
      *
      * @link   http://php.net/manual/en/jsonserializable.jsonserialize.php
@@ -90,6 +114,7 @@ class SearchResult implements JsonSerializable
 
         $object->search = $this->getSearch();
         $object->rowCount = $this->getRowCount();
+        $object->maxRows = $this->getMaxRows();
         $object->results = $this->getResults();
 
         return $object;
