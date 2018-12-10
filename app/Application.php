@@ -12,6 +12,8 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 final class Application
 {
+    const NOT_FOUND_MESSAGE = 'Page not found';
+
     /** @var Application */
     static private $instance;
     /** @var bool */
@@ -23,13 +25,27 @@ final class Application
 
     private function __construct()
     {
-        $this->slimApp = new \Slim\App;
+        $c['notFoundHandler'] = function ($c) {
+            return function ($request, $response) use ($c) {
+                return $response->withStatus(404)
+                    ->withHeader('Content-Type', 'text/html')
+                    ->write(self::NOT_FOUND_MESSAGE);
+            };
+        };
+
+        $this->slimApp = new \Slim\App($c);
+    }
+
+    public function getSlimApp()
+    {
+        return $this->slimApp;
     }
 
     static public function getInstance()
     {
         if (self::$instance === null) {
             self::$instance = new self;
+            self::$instance->setupRoutes();
         }
         return self::$instance;
     }
@@ -39,7 +55,6 @@ final class Application
         if (self::$alreadyRan === null) {
             self::$alreadyRan = true;
             $instance = self::getInstance();
-            $instance->setupRoutes();
             $instance->slimApp->run();
         }
     }
@@ -73,7 +88,7 @@ final class Application
                 $filters['name'] = $term;
             }
 
-            $filter = $params['filter'];
+            $filter = $params['filter'] ?? null;
             if (preg_match('/.{1}:.{1}/', $filter) > 0) {
                 $filter = explode(':', $filter);
                 $filters[$filter[0]] = $filter[1];
