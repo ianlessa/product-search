@@ -5,14 +5,6 @@ namespace IanLessa\ProductSearch;
 final class Search implements \JsonSerializable
 {
     /**
-     * @var string
-     */
-    private $term;
-    /**
-     * @var string[]
-     */
-    private $matches;
-    /**
      * @var Filter[]
      */
     private $filters;
@@ -26,63 +18,18 @@ final class Search implements \JsonSerializable
 
     /**
      * Search constructor.
-     * @param string $term
-     * @param string[] $matches
      * @param Filter[] $filters
      * @param Pagination $pagination
      * @param Sort $sort
      */
     public function __construct(
-        string $term = null,
-        array $matches = null,
         array $filters = null,
         Pagination $pagination = null,
         Sort $sort = null
     ) {
-        $this->setTerm($term);
-        $this->setMatches($matches);
         $this->setFilters($filters);
         $this->setPagination($pagination);
         $this->setSort($sort);
-    }
-
-    /**
-     * @return string
-     */
-    public function getTerm(): ?string
-    {
-        return $this->term;
-    }
-
-    /**
-     * @param string $term
-     * @return Search
-     */
-    public function setTerm(?string $term): Search
-    {
-        $this->term = $term;
-        return $this;
-    }
-
-    /**
-     * @return Match[]
-     */
-    public function getMatches(): array
-    {
-        if ($this->term !== null) {
-            return $this->matches ?? [];
-        }
-        return [];
-    }
-
-    /**
-     * @param Match[] $matches
-     * @return Search
-     */
-    public function setMatches(array $matches): Search
-    {
-        $this->matches = $matches;
-        return $this;
     }
 
     /**
@@ -150,8 +97,6 @@ final class Search implements \JsonSerializable
     {
         $obj = new \stdClass;
 
-        $obj->term = $this->getTerm();
-        $obj->matches = $this->getMatches();
         $obj->filters = $this->getFilters();
         $obj->pagination = $this->getPagination();
         $obj->sort = $this->getSort();

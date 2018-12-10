@@ -1,53 +1,24 @@
 <?php
 
-use IanLessa\ProductSearch\Pagination;
-use IanLessa\ProductSearch\Repositories\Product as ProductRepository;
-use IanLessa\ProductSearch\Search;
+use IanLessa\ProductSearch\Repositories\MySQL\Product as ProductRepository;
+use IanLessa\ProductSearch\SearchService;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 require 'vendor/autoload.php';
 
 $app = new \Slim\App;
-$app->get(/**
- * @param Request $request
- * @param Response $response
- * @param array $args
- * @return Response
- */
-    '/products', function (Request $request, Response $response, array $args) {
-    $getQuery = $request->getQueryParams();
+$app->get('/products', function (Request $request, Response $response, array $args) {
 
-    $prodRepo = new ProductRepository();
-
-    $params = new stdClass;
-    $params->term = $getQuery["q"];
-    $filter = $getQuery["filter"] ;
-    $filter = explode(":", $filter);
-    $filter = [$filter[0] => $filter[1]];
-    $params->sort = ['desc' => 'id'];
-
-    $term = $getQuery["q"];
-    $matches = ["name"];
-    $filters = $filter;
-
-
-    $pagination = new Pagination(
-        $getQuery["start_page"],
-        $getQuery["per_page"]
+    $repository = new ProductRepository(
+        'localhost',
+        3306,
+        'ian',
+        'root'
     );
 
-    $sort = null;
-
-    $search = new Search(
-       $term,
-       $matches,
-       $filters,
-       $pagination,
-       $sort
-    );
-
-    $results =  $prodRepo->fetch($search);
+    $searchService = new SearchService($repository);
+    $results = $searchService->searchProduct($request->getQueryParams());
 
     $resp = json_encode($results, JSON_PRETTY_PRINT);
 

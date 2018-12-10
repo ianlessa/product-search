@@ -8,7 +8,7 @@ class Product extends AbstractEntity
 {
     /** @var string */
     private $name;
-    /** @var Brand */
+    /** @var string */
     private $brand;
     /** @var string */
     private $description;
@@ -32,18 +32,18 @@ class Product extends AbstractEntity
     }
 
     /**
-     * @return Brand
+     * @return string
      */
-    public function getBrand(): Brand
+    public function getBrand(): string
     {
         return $this->brand;
     }
 
     /**
-     * @param Brand $brand
+     * @param string $brand
      * @return Product
      */
-    public function setBrand(Brand $brand): Product
+    public function setBrand(string $brand): Product
     {
         $this->brand = $brand;
         return $this;
