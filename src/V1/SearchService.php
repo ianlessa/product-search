@@ -22,6 +22,4 @@ class SearchService
     {
         return $this->repository->fetch($search);
     }
-
-
 }

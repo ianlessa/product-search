@@ -1,6 +1,5 @@
 <?php
 
-
 namespace IanLessa\ProductSearch\Test\V1\Integration\App;
 
 use IanLessa\ProductSearch\V1\Aggregates\Pagination;
@@ -18,7 +17,7 @@ class ApplicationTest extends AbstractBaseIntegrationTest
      */
     private $appInstance;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->appInstance = new Application($this->config);
@@ -178,11 +177,10 @@ class ApplicationTest extends AbstractBaseIntegrationTest
             if (!isset($expectedData->query)) {
                 continue;
             }
-            $this->setUp();
+            $this->appInstance = new Application($this->config);
             $mock = [
                 'REQUEST_METHOD' => 'GET',
                 'REQUEST_URI' => '/v1/products',
-
             ];
             if ($expectedData->query !== null) {
                 $mock['QUERY_STRING'] = $expectedData->query;

@@ -22,52 +22,12 @@ abstract class AbstractBaseIntegrationTest extends TestCase
 
     use TestCaseTrait;
 
-    /**
-     * Returns the test database connection.
-     *
-     * @return Connection
-     */
-    protected function getConnection()
+    protected function setUp()
     {
-        if ($this->pdo === null) {
-            $this->createPdo();
-        }
-        return $this->createDefaultDBConnection($this->pdo, 'product_search_test');
-    }
-
-    /**
-     * Returns the test dataset.
-     *
-     * @return IDataSet
-     */
-    protected function getDataSet()
-    {
-        $path = 'Test/V1/Integration/mockData.xml';
-        if (!file_exists($path)) {
-            $path = '../mockData.xml';
-        }
-        return $this->createMySQLXMLDataSet($path);
-    }
-
-    public function setUp()
-    {
-        $expectedDataPath = 'Test/V1/Integration/expectedResults.json';
-        if (!file_exists($expectedDataPath)) {
-            $expectedDataPath = '../expectedResults.json';
-        }
-
-        $expectedData = file_get_contents($expectedDataPath);
-        $this->expectedData = json_decode($expectedData);
-
-        $path = 'Test/V1/Integration/mockData.xml';
-        if (!file_exists($path)) {
-            $path = '../mockData.xml';
-        }
-        return $this->createMySQLXMLDataSet($path);
-
-
         $this->setConfig();
         $this->createPdo();
+        $this->loadExpectedData();
+        parent::setUp();
     }
 
     protected function setConfig()
@@ -92,7 +52,7 @@ abstract class AbstractBaseIntegrationTest extends TestCase
         $config = $this->config;
         $host = $config['DB_HOST'] ?? 'localhost';
         $port = $config['DB_PORT'] ?? '3306';
-        $database = $config['DB_DATABASE'] ?? 'product_search';
+        $database = $config['DB_DATABASE'] ?? 'product_search_test';
         $username = $config['DB_USERNAME'] ?? 'root';
         $password = $config['DB_PASSWORD'] ?? 'root';
         $dsn = "mysql:host=$host;port=$port;dbname=$database";
@@ -110,4 +70,39 @@ abstract class AbstractBaseIntegrationTest extends TestCase
             );
         ');
     }
-}
+
+    protected function loadExpectedData()
+    {
+        $expectedDataPath = 'Test/V1/Integration/expectedResults.json';
+        if (!file_exists($expectedDataPath)) {
+            $expectedDataPath = '../expectedResults.json';
+        }
+
+        $expectedData = file_get_contents($expectedDataPath);
+        $this->expectedData = json_decode($expectedData);
+    }
+
+    /**
+      * Returns the test database connection.
+      *
+      * @return Connection
+      */
+     protected function getConnection()
+     {
+         return $this->createDefaultDBConnection($this->pdo, $this->config['DB_DATABASE']);
+     }
+
+     /**
+      * Returns the test dataset.
+      *
+      * @return IDataSet
+      */
+     protected function getDataSet()
+     {
+         $path = 'Test/V1/Integration/mockData.xml';
+         if (!file_exists($path)) {
+             $path = '../mockData.xml';
+         }
+         return $this->createMySQLXMLDataSet($path);
+     }
+ }
