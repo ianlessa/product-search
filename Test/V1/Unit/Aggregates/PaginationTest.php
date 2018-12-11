@@ -1,9 +1,9 @@
 <?php
 
-namespace IanLessa\ProductSearch\Test\Unit\Aggregates;
+namespace IanLessa\ProductSearch\Test\V1\Unit\Aggregates;
 
-use IanLessa\ProductSearch\Aggregates\Pagination;
-use IanLessa\ProductSearch\Exceptions\InvalidParamException;
+use \IanLessa\ProductSearch\V1\Aggregates\Pagination;
+use \IanLessa\ProductSearch\V1\Exceptions\InvalidParamException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -31,13 +31,13 @@ class PaginationTest extends TestCase
 
     /**
      * @test
-     * @covers \IanLessa\ProductSearch\Aggregates\Pagination::default
-     * @covers \IanLessa\ProductSearch\Aggregates\Pagination::__construct
-     * @covers \IanLessa\ProductSearch\Aggregates\Pagination::setPerPage
-     * @covers \IanLessa\ProductSearch\Aggregates\Pagination::setStart
+     * @covers \IanLessa\ProductSearch\V1\Aggregates\Pagination::default
+     * @covers \IanLessa\ProductSearch\V1\Aggregates\Pagination::__construct
+     * @covers \IanLessa\ProductSearch\V1\Aggregates\Pagination::setPerPage
+     * @covers \IanLessa\ProductSearch\V1\Aggregates\Pagination::setStart
      *
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::getPerPage
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::getStart
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::getPerPage
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::getStart
      */
     public function defaultShouldReturnDefaultPagination()
     {
@@ -54,13 +54,13 @@ class PaginationTest extends TestCase
 
     /**
      * @test
-     * @covers \IanLessa\ProductSearch\Aggregates\Pagination::jsonSerialize
+     * @covers \IanLessa\ProductSearch\V1\Aggregates\Pagination::jsonSerialize
      *
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::__construct
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::getPerPage
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::getStart
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::setPerPage
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::setStart
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::__construct
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::getPerPage
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::getStart
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::setPerPage
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::setStart
      */
     public function jsonSerializeShouldReturnSerializedObject()
     {
@@ -78,12 +78,12 @@ class PaginationTest extends TestCase
 
     /**
      * @test
-     * @covers \IanLessa\ProductSearch\Aggregates\Pagination::getStart
-     * @covers \IanLessa\ProductSearch\Aggregates\Pagination::getPerPage
+     * @covers \IanLessa\ProductSearch\V1\Aggregates\Pagination::getStart
+     * @covers \IanLessa\ProductSearch\V1\Aggregates\Pagination::getPerPage
      *
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::__construct
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::setPerPage
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::setStart
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::__construct
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::setPerPage
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::setStart
      */
     public function gettersShouldReturnCorrectValues()
     {
@@ -95,11 +95,11 @@ class PaginationTest extends TestCase
 
     /**
      * @test
-     * @covers \IanLessa\ProductSearch\Aggregates\Pagination::setStart
-     * @covers \IanLessa\ProductSearch\Aggregates\Pagination::setPerPage
+     * @covers \IanLessa\ProductSearch\V1\Aggregates\Pagination::setStart
+     * @covers \IanLessa\ProductSearch\V1\Aggregates\Pagination::setPerPage
      *
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::__construct
-     * @uses \IanLessa\ProductSearch\Exceptions\InvalidParamException::__construct
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::__construct
+     * @uses \IanLessa\ProductSearch\V1\Exceptions\InvalidParamException::__construct
      */
     public function aPaginationShouldNotBeCreatedWithLestThanOneParams()
     {
@@ -128,15 +128,15 @@ class PaginationTest extends TestCase
     /**
      * @test
      *
-     * @covers \IanLessa\ProductSearch\Aggregates\Pagination::isEqual
+     * @covers \IanLessa\ProductSearch\V1\Aggregates\Pagination::isEqual
      *
-     * @uses \IanLessa\ProductSearch\AbstractValueObject::equals
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::__construct
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::default
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::getPerPage
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::getStart
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::setPerPage
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::setStart
+     * @uses \IanLessa\ProductSearch\V1\AbstractValueObject::equals
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::__construct
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::default
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::getPerPage
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::getStart
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::setPerPage
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::setStart
      *
      */
     public function aPaginationShouldBeComparable()

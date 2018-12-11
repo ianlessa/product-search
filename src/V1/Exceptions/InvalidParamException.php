@@ -1,5 +1,5 @@
 <?php
-namespace IanLessa\ProductSearch\Exceptions;
+namespace IanLessa\ProductSearch\V1\Exceptions;
 
 use Throwable;
 

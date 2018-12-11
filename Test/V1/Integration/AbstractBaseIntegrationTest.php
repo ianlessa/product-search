@@ -1,6 +1,6 @@
 <?php
 
-namespace IanLessa\ProductSearch\Test\Integration;
+namespace IanLessa\ProductSearch\Test\V1\Integration;
 
 use PDO;
 use PHPUnit\DbUnit\Database\Connection;
@@ -42,7 +42,7 @@ abstract class AbstractBaseIntegrationTest extends TestCase
      */
     protected function getDataSet()
     {
-        $path = 'Test/Integration/mockData.xml';
+        $path = 'Test/V1/Integration/mockData.xml';
         if (!file_exists($path)) {
             $path = '../mockData.xml';
         }
@@ -51,7 +51,7 @@ abstract class AbstractBaseIntegrationTest extends TestCase
 
     public function setUp()
     {
-        $expectedDataPath = 'Test/Integration/expectedResults.json';
+        $expectedDataPath = 'Test/V1/Integration/expectedResults.json';
         if (!file_exists($expectedDataPath)) {
             $expectedDataPath = '../expectedResults.json';
         }
@@ -59,8 +59,8 @@ abstract class AbstractBaseIntegrationTest extends TestCase
         $expectedData = file_get_contents($expectedDataPath);
         $this->expectedData = json_decode($expectedData);
 
-        $path = 'Test/Integration/mockData.xml';
-        if (!file_exists($expectedDataPath)) {
+        $path = 'Test/V1/Integration/mockData.xml';
+        if (!file_exists($path)) {
             $path = '../mockData.xml';
         }
         return $this->createMySQLXMLDataSet($path);

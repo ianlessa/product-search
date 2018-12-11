@@ -1,8 +1,8 @@
 <?php
 
-namespace IanLessa\ProductSearch\Aggregates;
+namespace IanLessa\ProductSearch\V1\Aggregates;
 
-use IanLessa\ProductSearch\AbstractEntity;
+use IanLessa\ProductSearch\V1\AbstractEntity;
 
 class Product extends AbstractEntity
 {

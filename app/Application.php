@@ -2,11 +2,11 @@
 
 namespace IanLessa\ProductSearchApp;
 
-use IanLessa\ProductSearch\Aggregates\Pagination;
-use IanLessa\ProductSearch\Repositories\MySQL\Product as ProductRepository;
-use IanLessa\ProductSearch\Aggregates\Search;
-use IanLessa\ProductSearch\SearchService;
-use IanLessa\ProductSearch\Aggregates\Sort;
+use IanLessa\ProductSearch\V1\Aggregates\Pagination as PaginationV1;
+use IanLessa\ProductSearch\V1\Repositories\MySQL\Product as ProductRepositoryV1;
+use IanLessa\ProductSearch\V1\Aggregates\Search as SearchV1;
+use IanLessa\ProductSearch\V1\SearchService  as SearchServiceV1;
+use IanLessa\ProductSearch\V1\Aggregates\Sort  as SortV1;
 use PDO;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -61,11 +61,11 @@ final class Application
     {
         $application = $this;
         $this->slimApp->get(
-            '/products', function (Request $request, Response $response, array $args) use ($application) {
+            '/v1/products', function (Request $request, Response $response, array $args) use ($application) {
                 $repository = $application->createProductRepository();
                 $search = $application->createSearchFromGet($request->getQueryParams());
 
-                $searchService = new SearchService($repository);
+                $searchService = new SearchServiceV1($repository);
                 $results = $searchService->searchProduct($search);
 
                 $resp = json_encode($results, JSON_PRETTY_PRINT);
@@ -77,7 +77,7 @@ final class Application
         );
     }
 
-    public function createSearchFromGet($params) : Search
+    public function createSearchFromGet($params) : SearchV1
     {
         try {
             $filters = [];
@@ -99,23 +99,23 @@ final class Application
             if (preg_match('/.{1}:.{1}/', $baseSort) > 0) {
                 $baseSort = explode(':', $baseSort);
                 $method = $baseSort[0];
-                if (method_exists(Sort::class, $method)) {
-                    $sort = Sort::$method($baseSort[1]);
+                if (method_exists(SortV1::class, $method)) {
+                    $sort = SortV1::$method($baseSort[1]);
                 }
             }
 
-            $pagination = new Pagination(
+            $pagination = new PaginationV1(
                 $params["start_page"] ?? null,
                 $params["per_page"] ?? null
             );
 
-            return new Search(
+            return new SearchV1(
                 $filters,
                 $pagination,
                 $sort
             );
         }catch(\Throwable $e) {
-            return new Search;
+            return new SearchV1;
         }
     }
 
@@ -131,6 +131,6 @@ final class Application
         $pdo = new PDO($dsn, $username, $password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        return new ProductRepository($pdo);
+        return new ProductRepositoryV1($pdo);
     }
 }

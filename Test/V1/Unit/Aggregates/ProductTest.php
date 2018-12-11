@@ -1,8 +1,8 @@
 <?php
 
-namespace IanLessa\ProductSearch\Test\Unit\Aggregates;
+namespace IanLessa\ProductSearch\Test\V1\Unit\Aggregates;
 
-use IanLessa\ProductSearch\Aggregates\Product;
+use \IanLessa\ProductSearch\V1\Aggregates\Product;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -26,12 +26,12 @@ class ProductTest extends TestCase
     /**
      * @test
      *
-     * @covers \IanLessa\ProductSearch\Aggregates\Product::setName
-     * @covers \IanLessa\ProductSearch\Aggregates\Product::getBrand
-     * @covers \IanLessa\ProductSearch\Aggregates\Product::getDescription
-     * @covers \IanLessa\ProductSearch\Aggregates\Product::getName
-     * @covers \IanLessa\ProductSearch\Aggregates\Product::setBrand
-     * @covers \IanLessa\ProductSearch\Aggregates\Product::setDescription
+     * @covers \IanLessa\ProductSearch\V1\Aggregates\Product::setName
+     * @covers \IanLessa\ProductSearch\V1\Aggregates\Product::getBrand
+     * @covers \IanLessa\ProductSearch\V1\Aggregates\Product::getDescription
+     * @covers \IanLessa\ProductSearch\V1\Aggregates\Product::getName
+     * @covers \IanLessa\ProductSearch\V1\Aggregates\Product::setBrand
+     * @covers \IanLessa\ProductSearch\V1\Aggregates\Product::setDescription
      */
     public function gettersAndSettersShouldFunctionAsExpected()
     {
@@ -48,16 +48,16 @@ class ProductTest extends TestCase
     /**
      * @test
      *
-     * @covers \IanLessa\ProductSearch\Aggregates\Product::jsonSerialize
+     * @covers \IanLessa\ProductSearch\V1\Aggregates\Product::jsonSerialize
      *
-     * @uses \IanLessa\ProductSearch\AbstractEntity::getId
-     * @uses \IanLessa\ProductSearch\AbstractEntity::setId
-     * @uses \IanLessa\ProductSearch\Aggregates\Product::getBrand
-     * @uses \IanLessa\ProductSearch\Aggregates\Product::getDescription
-     * @uses \IanLessa\ProductSearch\Aggregates\Product::getName
-     * @uses \IanLessa\ProductSearch\Aggregates\Product::setBrand
-     * @uses \IanLessa\ProductSearch\Aggregates\Product::setDescription
-     * @uses \IanLessa\ProductSearch\Aggregates\Product::setName
+     * @uses \IanLessa\ProductSearch\V1\AbstractEntity::getId
+     * @uses \IanLessa\ProductSearch\V1\AbstractEntity::setId
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Product::getBrand
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Product::getDescription
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Product::getName
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Product::setBrand
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Product::setDescription
+     * @uses \IanLessa\ProductSearch\V1\Aggregates\Product::setName
      */
     public function aProductShouldBeSerializedCorrectly()
     {

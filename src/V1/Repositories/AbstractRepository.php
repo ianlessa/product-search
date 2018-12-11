@@ -6,12 +6,12 @@
  * Time: 11:09
  */
 
-namespace IanLessa\ProductSearch\Repositories;
+namespace IanLessa\ProductSearch\V1\Repositories;
 
 
-use IanLessa\ProductSearch\Aggregates\Search;
-use IanLessa\ProductSearch\Aggregates\SearchResult;
-use IanLessa\ProductSearch\Interfaces\RepositoryInterface;
+use IanLessa\ProductSearch\V1\Aggregates\Search;
+use IanLessa\ProductSearch\V1\Aggregates\SearchResult;
+use IanLessa\ProductSearch\V1\Interfaces\RepositoryInterface;
 use Exception;
 
 abstract class AbstractRepository implements RepositoryInterface

@@ -1,8 +1,8 @@
 <?php
 
-namespace IanLessa\ProductSearch\Test\Unit;
+namespace IanLessa\ProductSearch\Test\V1\Unit;
 
-use IanLessa\ProductSearch\Aggregates\Product;
+use \IanLessa\ProductSearch\V1\Aggregates\Product;
 use PHPUnit\Framework\TestCase;
 
 class AbstractEntityTest extends TestCase
@@ -18,8 +18,8 @@ class AbstractEntityTest extends TestCase
     /**
      * @test
      *
-     * @covers \IanLessa\ProductSearch\AbstractEntity::getId
-     * @covers \IanLessa\ProductSearch\AbstractEntity::setId
+     * @covers \IanLessa\ProductSearch\V1\AbstractEntity::getId
+     * @covers \IanLessa\ProductSearch\V1\AbstractEntity::setId
      */
     public function anAbstractEntityGettersAndSettersShouldWorkAsExpected()
     {
@@ -32,10 +32,10 @@ class AbstractEntityTest extends TestCase
     /**
      * @test
      *
-     * @covers \IanLessa\ProductSearch\AbstractEntity::equals
+     * @covers \IanLessa\ProductSearch\V1\AbstractEntity::equals
      *
-     * @uses \IanLessa\ProductSearch\AbstractEntity::getId
-     * @uses \IanLessa\ProductSearch\AbstractEntity::setId
+     * @uses \IanLessa\ProductSearch\V1\AbstractEntity::getId
+     * @uses \IanLessa\ProductSearch\V1\AbstractEntity::setId
      */
     public function abstractEntitiesShouldBeComparable()
     {

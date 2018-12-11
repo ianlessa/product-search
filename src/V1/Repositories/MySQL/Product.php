@@ -1,11 +1,11 @@
 <?php
-namespace IanLessa\ProductSearch\Repositories\MySQL;
+namespace IanLessa\ProductSearch\V1\Repositories\MySQL;
 
-use IanLessa\ProductSearch\Aggregates\Product as ProductEntity;
-use IanLessa\ProductSearch\Interfaces\RepositoryInterface;
-use IanLessa\ProductSearch\Aggregates\Search;
-use IanLessa\ProductSearch\Aggregates\SearchResult;
-use IanLessa\ProductSearch\Repositories\AbstractRepository;
+use IanLessa\ProductSearch\V1\Aggregates\Product as ProductEntity;
+use IanLessa\ProductSearch\V1\Interfaces\RepositoryInterface;
+use IanLessa\ProductSearch\V1\Aggregates\Search;
+use IanLessa\ProductSearch\V1\Aggregates\SearchResult;
+use IanLessa\ProductSearch\V1\Repositories\AbstractRepository;
 use PDO;
 
 class Product extends AbstractRepository

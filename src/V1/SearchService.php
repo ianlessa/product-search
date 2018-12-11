@@ -1,10 +1,10 @@
 <?php
 
-namespace IanLessa\ProductSearch;
+namespace IanLessa\ProductSearch\V1;
 
-use IanLessa\ProductSearch\Aggregates\Search;
-use IanLessa\ProductSearch\Aggregates\SearchResult;
-use IanLessa\ProductSearch\Interfaces\RepositoryInterface;
+use IanLessa\ProductSearch\V1\Aggregates\Search;
+use IanLessa\ProductSearch\V1\Aggregates\SearchResult;
+use IanLessa\ProductSearch\V1\Interfaces\RepositoryInterface;
 
 class SearchService
 {
