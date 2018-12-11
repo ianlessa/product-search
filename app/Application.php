@@ -15,7 +15,9 @@ final class Application
 {
     const NOT_FOUND_MESSAGE = 'Page not found';
 
-    /** @var bool */
+    /**
+     * @var bool 
+     */
     static private $alreadyRan;
     /**
      * @var \Slim\App
@@ -58,19 +60,21 @@ final class Application
     private function setupRoutes()
     {
         $application = $this;
-        $this->slimApp->get('/products', function (Request $request, Response $response, array $args) use ($application) {
-            $repository = $application->createProductRepository();
-            $search = $application->createSearchFromGet($request->getQueryParams());
+        $this->slimApp->get(
+            '/products', function (Request $request, Response $response, array $args) use ($application) {
+                $repository = $application->createProductRepository();
+                $search = $application->createSearchFromGet($request->getQueryParams());
 
-            $searchService = new SearchService($repository);
-            $results = $searchService->searchProduct($search);
+                $searchService = new SearchService($repository);
+                $results = $searchService->searchProduct($search);
 
-            $resp = json_encode($results, JSON_PRETTY_PRINT);
+                $resp = json_encode($results, JSON_PRETTY_PRINT);
 
-            $response->getBody()->write($resp);
+                $response->getBody()->write($resp);
 
-            return $response;
-        });
+                return $response;
+            }
+        );
     }
 
     public function createSearchFromGet($params) : Search

@@ -91,7 +91,7 @@ class SearchResult implements JsonSerializable
     }
 
     /**
-     * @param int $maxRows
+     * @param  int $maxRows
      * @return SearchResult
      */
     public function setMaxRows(int $maxRows): SearchResult

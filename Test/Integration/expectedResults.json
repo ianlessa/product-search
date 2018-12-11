@@ -1,0 +1,349 @@
+{
+  "tests": [
+    {
+      "query": null,
+      "result": {
+        "search": {
+          "filters": [
+
+          ],
+          "pagination": {
+            "start": 0,
+            "perPage": 5
+          },
+          "sort": null
+        },
+        "rowCount": 5,
+        "maxRows": 17,
+        "results": [
+          {
+            "id": "1",
+            "name": "Flowered Dress",
+            "brand": "Sunflower",
+            "description": "A beautiful flowered dress perfect for a flowered person."
+          },
+          {
+            "id": "2",
+            "name": "Daisy Hat",
+            "brand": "Sunflower",
+            "description": "A cute daisy-shaped hat which is the latest trend in the garden!"
+          },
+          {
+            "id": "3",
+            "name": "Banana Pajama",
+            "brand": "Banana Boat",
+            "description": "A yellow pajama with brown ellipses on it."
+          },
+          {
+            "id": "4",
+            "name": "Banana shoes",
+            "brand": "Banana Boat",
+            "description": "A pair of shoes that makes you look a little bit out of the box."
+          },
+          {
+            "id": "5",
+            "name": "Banana Leaf Coat",
+            "brand": "Banana Boat",
+            "description": "A comfortable coat entirely made of banana leaves."
+          }
+        ]
+      }
+    },
+    {
+      "query" : "q=shoe",
+      "result": {
+        "search": {
+          "filters": {
+            "name": "shoe"
+          },
+          "pagination": {
+            "start": 0,
+            "perPage": 5
+          },
+          "sort": null
+        },
+        "rowCount": 3,
+        "maxRows": 3,
+        "results": [
+          {
+            "id": "4",
+            "name": "Banana shoes",
+            "brand": "Banana Boat",
+            "description": "A pair of shoes that makes you look a little bit out of the box."
+          },
+          {
+            "id": "7",
+            "name": "Beach Shoes",
+            "brand": "Tropical Wear",
+            "description": "A pair of shoes to use on beach. They are fresh and maintain your feet free of sweat."
+          },
+          {
+            "id": "12",
+            "name": "Black Shoes",
+            "brand": "Primark",
+            "description": "A classic pair of shoes that matches with your lifestyle."
+          }
+        ]
+      }
+    },
+    {
+      "query" : "start_page=1",
+      "result" : {
+        "search": {
+          "filters": [
+
+          ],
+          "pagination": {
+            "start": 1,
+            "perPage": 5
+          },
+          "sort": null
+        },
+        "rowCount": 5,
+        "maxRows": 17,
+        "results": [
+          {
+            "id": "6",
+            "name": "Aviator Sunglasses",
+            "brand": "Tropical Wear",
+            "description": "If you want to fly away, make sure to have one of these."
+          },
+          {
+            "id": "7",
+            "name": "Beach Shoes",
+            "brand": "Tropical Wear",
+            "description": "A pair of shoes to use on beach. They are fresh and maintain your feet free of sweat."
+          },
+          {
+            "id": "8",
+            "name": "Beach Coat",
+            "brand": "Tropical Wear",
+            "description": "If you think that bikinis are too revealing, this product is perfect for you!"
+          },
+          {
+            "id": "9",
+            "name": "Clover Glasses",
+            "brand": "Sunflower",
+            "description": "Put some luck in your life with the brand new product of our eyewear collection!"
+          },
+          {
+            "id": "10",
+            "name": "New Year's Eve Dress",
+            "brand": "Primark",
+            "description": "A white dress that helps your dreams come true in the next year."
+          }
+        ]
+      }
+    },
+    {
+      "query": "per_page=3",
+      "result": {
+        "search": {
+          "filters": [
+
+          ],
+          "pagination": {
+            "start": 0,
+            "perPage": 3
+          },
+          "sort": null
+        },
+        "rowCount": 3,
+        "maxRows": 17,
+        "results": [
+          {
+            "id": "1",
+            "name": "Flowered Dress",
+            "brand": "Sunflower",
+            "description": "A beautiful flowered dress perfect for a flowered person."
+          },
+          {
+            "id": "2",
+            "name": "Daisy Hat",
+            "brand": "Sunflower",
+            "description": "A cute daisy-shaped hat which is the latest trend in the garden!"
+          },
+          {
+            "id": "3",
+            "name": "Banana Pajama",
+            "brand": "Banana Boat",
+            "description": "A yellow pajama with brown ellipses on it."
+          }
+        ]
+      }
+    },
+    {
+      "query": "filter=brand:primark",
+      "result": {
+        "search": {
+          "filters": {
+            "brand": "primark"
+          },
+          "pagination": {
+            "start": 0,
+            "perPage": 5
+          },
+          "sort": null
+        },
+        "rowCount": 4,
+        "maxRows": 4,
+        "results": [
+          {
+            "id": "10",
+            "name": "New Year's Eve Dress",
+            "brand": "Primark",
+            "description": "A white dress that helps your dreams come true in the next year."
+          },
+          {
+            "id": "11",
+            "name": "Black Jeans",
+            "brand": "Primark",
+            "description": "An all purpose casual pair of jeans."
+          },
+          {
+            "id": "12",
+            "name": "Black Shoes",
+            "brand": "Primark",
+            "description": "A classic pair of shoes that matches with your lifestyle."
+          },
+          {
+            "id": "13",
+            "name": "Black Sneakers",
+            "brand": "Primark",
+            "description": "For youngsters of all ages."
+          }
+        ]
+      }
+    },
+    {
+      "query": "sort=desc:description" ,
+      "result":{
+        "search": {
+          "filters": [
+
+          ],
+          "pagination": {
+            "start": 0,
+            "perPage": 5
+          },
+          "sort": {
+            "value": "description",
+            "type": "DESC"
+          }
+        },
+        "rowCount": 5,
+        "maxRows": 17,
+        "results": [
+          {
+            "id": "9",
+            "name": "Clover Glasses",
+            "brand": "Sunflower",
+            "description": "Put some luck in your life with the brand new product of our eyewear collection!"
+          },
+          {
+            "id": "6",
+            "name": "Aviator Sunglasses",
+            "brand": "Tropical Wear",
+            "description": "If you want to fly away, make sure to have one of these."
+          },
+          {
+            "id": "8",
+            "name": "Beach Coat",
+            "brand": "Tropical Wear",
+            "description": "If you think that bikinis are too revealing, this product is perfect for you!"
+          },
+          {
+            "id": "13",
+            "name": "Black Sneakers",
+            "brand": "Primark",
+            "description": "For youngsters of all ages."
+          },
+          {
+            "id": "11",
+            "name": "Black Jeans",
+            "brand": "Primark",
+            "description": "An all purpose casual pair of jeans."
+          }
+        ]
+      }
+    },
+    {
+      "query": "q=dress&filter=brand:er&sort=desc:id&start_page=1&per_page=2",
+      "result": {
+        "search": {
+          "filters": {
+            "name": "dress",
+            "brand": "er"
+          },
+          "pagination": {
+            "start": 1,
+            "perPage": 2
+          },
+          "sort": {
+            "value": "id",
+            "type": "DESC"
+          }
+        },
+        "rowCount": 1,
+        "maxRows": 3,
+        "results": [
+          {
+            "id": "1",
+            "name": "Flowered Dress",
+            "brand": "Sunflower",
+            "description": "A beautiful flowered dress perfect for a flowered person."
+          }
+        ]
+      }
+    },
+    {
+      "query": "q=dress&filter=invalide:er&sort=invalid:id&start_page=invalid&per_page=invalid",
+      "result": {
+        "search": {
+          "filters": [
+
+          ],
+          "pagination": {
+            "start": 0,
+            "perPage": 5
+          },
+          "sort": null
+        },
+        "rowCount": 5,
+        "maxRows": 17,
+        "results": [
+          {
+            "id": "1",
+            "name": "Flowered Dress",
+            "brand": "Sunflower",
+            "description": "A beautiful flowered dress perfect for a flowered person."
+          },
+          {
+            "id": "2",
+            "name": "Daisy Hat",
+            "brand": "Sunflower",
+            "description": "A cute daisy-shaped hat which is the latest trend in the garden!"
+          },
+          {
+            "id": "3",
+            "name": "Banana Pajama",
+            "brand": "Banana Boat",
+            "description": "A yellow pajama with brown ellipses on it."
+          },
+          {
+            "id": "4",
+            "name": "Banana shoes",
+            "brand": "Banana Boat",
+            "description": "A pair of shoes that makes you look a little bit out of the box."
+          },
+          {
+            "id": "5",
+            "name": "Banana Leaf Coat",
+            "brand": "Banana Boat",
+            "description": "A comfortable coat entirely made of banana leaves."
+          }
+        ]
+      }
+    }
+  ]
+}
