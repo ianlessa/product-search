@@ -87,46 +87,13 @@ class ApplicationTest extends AbstractBaseIntegrationTest
 
     /**
      * @test
-     * @covers \IanLessa\ProductSearchApp\Application::createSearchFromGet
      *
-     * @uses \IanLessa\ProductSearchApp\Application::__construct
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::__construct
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::default
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::setPerPage
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::setStart
-     * @uses \IanLessa\ProductSearch\Aggregates\Search::__construct
-     * @uses \IanLessa\ProductSearch\Aggregates\Search::setFilters
-     * @uses \IanLessa\ProductSearch\Aggregates\Search::setPagination
-     * @uses \IanLessa\ProductSearch\Aggregates\Search::setSort
-     * @uses \IanLessa\ProductSearch\Exceptions\InvalidParamException::__construct
-     * @uses \IanLessa\ProductSearchApp\Application::setupRoutes
-     *
-     */
-    public function onIncorrectParamsCreateSearchFromGetShouldReturnDefaultSearchObject()
-    {
-        $params = [
-            'start_page' => '-1',
-            'per_page' => 'as200',
-            'filter' => 'branqd:brand_name',
-            'sort' => 'asffc:description'
-        ];
-        $defaultSearch = new Search();
-
-        $search = $this->appInstance->createSearchFromGet($params);
-
-        $this->assertEquals($defaultSearch, $search);
-    }
-
-    /**
-     * @test
-     *
-     * @covers \IanLessa\ProductSearchApp\Application::setupRoutes
+     * @covers \IanLessa\ProductSearchApp\Application::__construct     *
      * @covers \IanLessa\ProductSearchApp\Application::getSlimApp
-     *
-     * @uses \IanLessa\ProductSearchApp\Application::__construct
-     *
+     * @covers \IanLessa\ProductSearchApp\Application::run
+     * @covers \IanLessa\ProductSearchApp\Application::setupRoutes
      */
-    public function aInvalidRouteShouldReturnNotFound()
+    public function invalidRouteShouldReturn404()
     {
         $env = \Slim\Http\Environment::mock([
             'REQUEST_METHOD' => 'GET',
@@ -136,19 +103,21 @@ class ApplicationTest extends AbstractBaseIntegrationTest
         $req = Request::createFromEnvironment($env);
         $this->appInstance->getSlimApp()->getContainer()['request'] = $req;
 
-        $response = $this->appInstance->getSlimApp()->run(true);
-
+        $response = $this->appInstance->run(true);
         $this->assertEquals(404, $response->getStatusCode());
+        $this->assertEquals(Application::NOT_FOUND_MESSAGE, $response->getBody());
+        $this->assertNull($this->appInstance->run(true));
     }
 
     /**
      * @test
      *
-     * @covers \IanLessa\ProductSearchApp\Application::setupRoutes
-     * @covers \IanLessa\ProductSearchApp\Application::getSlimApp
      * @covers \IanLessa\ProductSearchApp\Application::__construct
      * @covers \IanLessa\ProductSearchApp\Application::createProductRepository
      * @covers \IanLessa\ProductSearchApp\Application::createSearchFromGet
+     * @covers \IanLessa\ProductSearchApp\Application::getSlimApp
+     * @covers \IanLessa\ProductSearchApp\Application::run
+     * @covers \IanLessa\ProductSearchApp\Application::setupRoutes
      *
      * @uses \IanLessa\ProductSearch\AbstractEntity::getId
      * @uses \IanLessa\ProductSearch\AbstractEntity::setId
@@ -183,97 +152,6 @@ class ApplicationTest extends AbstractBaseIntegrationTest
      * @uses \IanLessa\ProductSearch\Aggregates\SearchResult::setMaxRows
      * @uses \IanLessa\ProductSearch\Aggregates\SearchResult::setResults
      * @uses \IanLessa\ProductSearch\Aggregates\SearchResult::setSearch
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::__construct
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::fetch
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::formatResults
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getBaseQuery
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getMaxRows
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getPaginationQuery
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getSortQuery
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getWhereQuery
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::preparePaginationQuery
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::prepareWhereQuery
-     * @uses \IanLessa\ProductSearch\SearchService::__construct
-     * @uses \IanLessa\ProductSearch\SearchService::searchProduct
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getConnectionClass
-     */
-    public function productRouteWithoutParamsShouldReturnDefaultProductSearch()
-    {
-        $repository = new Product($this->pdo);
-        $searchService = new SearchService($repository);
-        $defaultResult = $searchService->searchProduct(new Search());
-        $defaultResult = json_encode($defaultResult);
-        $defaultResult = json_decode($defaultResult);
-
-        $env = \Slim\Http\Environment::mock([
-            'REQUEST_METHOD' => 'GET',
-            'REQUEST_URI' => '/products',
-        ]);
-
-        $req = Request::createFromEnvironment($env);
-        $this->appInstance->getSlimApp()->getContainer()['request'] = $req;
-
-        $response = $this->appInstance->getSlimApp()->run(true);
-        $objectResponse = json_decode($response->getBody());
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals($defaultResult, $objectResponse);
-    }
-
-    /**
-     * @test
-     *
-     * @covers \IanLessa\ProductSearchApp\Application::setupRoutes
-     * @covers \IanLessa\ProductSearchApp\Application::getSlimApp
-     * @covers \IanLessa\ProductSearchApp\Application::__construct
-     * @covers \IanLessa\ProductSearchApp\Application::createProductRepository
-     * @covers \IanLessa\ProductSearchApp\Application::createSearchFromGet
-     *
-     * @uses \IanLessa\ProductSearch\AbstractEntity::getId
-     * @uses \IanLessa\ProductSearch\AbstractEntity::setId
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::__construct
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::default
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::getPerPage
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::getStart
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::jsonSerialize
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::setPerPage
-     * @uses \IanLessa\ProductSearch\Aggregates\Pagination::setStart
-     * @uses \IanLessa\ProductSearch\Aggregates\Product::getBrand
-     * @uses \IanLessa\ProductSearch\Aggregates\Product::getDescription
-     * @uses \IanLessa\ProductSearch\Aggregates\Product::getName
-     * @uses \IanLessa\ProductSearch\Aggregates\Product::jsonSerialize
-     * @uses \IanLessa\ProductSearch\Aggregates\Product::setBrand
-     * @uses \IanLessa\ProductSearch\Aggregates\Product::setDescription
-     * @uses \IanLessa\ProductSearch\Aggregates\Product::setName
-     * @uses \IanLessa\ProductSearch\Aggregates\Search::__construct
-     * @uses \IanLessa\ProductSearch\Aggregates\Search::getFilters
-     * @uses \IanLessa\ProductSearch\Aggregates\Search::getPagination
-     * @uses \IanLessa\ProductSearch\Aggregates\Search::getSort
-     * @uses \IanLessa\ProductSearch\Aggregates\Search::jsonSerialize
-     * @uses \IanLessa\ProductSearch\Aggregates\Search::setFilters
-     * @uses \IanLessa\ProductSearch\Aggregates\Search::setPagination
-     * @uses \IanLessa\ProductSearch\Aggregates\Search::setSort
-     * @uses \IanLessa\ProductSearch\Aggregates\SearchResult::__construct
-     * @uses \IanLessa\ProductSearch\Aggregates\SearchResult::getMaxRows
-     * @uses \IanLessa\ProductSearch\Aggregates\SearchResult::getResults
-     * @uses \IanLessa\ProductSearch\Aggregates\SearchResult::getRowCount
-     * @uses \IanLessa\ProductSearch\Aggregates\SearchResult::getSearch
-     * @uses \IanLessa\ProductSearch\Aggregates\SearchResult::jsonSerialize
-     * @uses \IanLessa\ProductSearch\Aggregates\SearchResult::setMaxRows
-     * @uses \IanLessa\ProductSearch\Aggregates\SearchResult::setResults
-     * @uses \IanLessa\ProductSearch\Aggregates\SearchResult::setSearch
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::__construct
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::fetch
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::formatResults
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getBaseQuery
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getMaxRows
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getPaginationQuery
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getSortQuery
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getWhereQuery
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::preparePaginationQuery
-     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::prepareWhereQuery
-     * @uses \IanLessa\ProductSearch\SearchService::__construct
-     * @uses \IanLessa\ProductSearch\SearchService::searchProduct
      * @uses \IanLessa\ProductSearch\Aggregates\Sort::__construct
      * @uses \IanLessa\ProductSearch\Aggregates\Sort::desc
      * @uses \IanLessa\ProductSearch\Aggregates\Sort::getType
@@ -281,38 +159,46 @@ class ApplicationTest extends AbstractBaseIntegrationTest
      * @uses \IanLessa\ProductSearch\Aggregates\Sort::jsonSerialize
      * @uses \IanLessa\ProductSearch\Aggregates\Sort::setType
      * @uses \IanLessa\ProductSearch\Aggregates\Sort::setValue
+     * @uses \IanLessa\ProductSearch\Repositories\AbstractRepository::__construct
+     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::fetch
+     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::formatResults
+     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getBaseQuery
      * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getConnectionClass
+     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getMaxRows
+     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getPaginationQuery
+     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getSortQuery
+     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getWhereQuery
+     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::preparePaginationQuery
+     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::prepareWhereQuery
+     * @uses \IanLessa\ProductSearch\SearchService::__construct
+     * @uses \IanLessa\ProductSearch\SearchService::searchProduct
      */
-    public function productRouteWithParamsShouldReturnCorrectSearchResults()
+    public function variousQueriesShouldReturnTheCorrectResult()
     {
-        $repository = new Product($this->pdo);
+        foreach ($this->expectedData->tests as $expectedData) {
+            if (!isset($expectedData->query)) {
+                continue;
+            }
+            $this->setUp();
+            $mock = [
+                'REQUEST_METHOD' => 'GET',
+                'REQUEST_URI' => '/products',
 
-        $queryString = 'q=black&per_page=7&sort=desc:description';
-        $params = [];
-        foreach (explode("&", $queryString) as $param ) {
-            $data = explode('=', $param);
-            $params[$data[0]] = $data[1];
+            ];
+            if ($expectedData->query !== null) {
+                $mock['QUERY_STRING'] = $expectedData->query;
+            }
+
+            $env = \Slim\Http\Environment::mock($mock);
+
+            $req = Request::createFromEnvironment($env);
+            $this->appInstance->getSlimApp()->getContainer()['request'] = $req;
+
+            $response = $this->appInstance->run(true, true);
+            $objectResponse = json_decode($response->getBody());
+
+            $this->assertEquals(200, $response->getStatusCode());
+            $this->assertEquals($expectedData->result, $objectResponse);
         }
-        $search = $this->appInstance->createSearchFromGet($params);
-
-        $searchService = new SearchService($repository);
-        $defaultResult = $searchService->searchProduct($search);
-        $defaultResult = json_encode($defaultResult);
-        $defaultResult = json_decode($defaultResult);
-
-        $env = \Slim\Http\Environment::mock([
-            'REQUEST_METHOD' => 'GET',
-            'REQUEST_URI' => '/products',
-            'QUERY_STRING' => $queryString
-        ]);
-
-        $req = Request::createFromEnvironment($env);
-        $this->appInstance->getSlimApp()->getContainer()['request'] = $req;
-
-        $response = $this->appInstance->getSlimApp()->run(true);
-        $objectReponse = json_decode($response->getBody());
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals($defaultResult, $objectReponse);
     }
 }

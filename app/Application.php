@@ -46,19 +46,19 @@ final class Application
         return $this->slimApp;
     }
 
-    public function run()
+    public function run(bool $silent = false, bool $multipleRun = false) : ?\Slim\Http\Response
     {
-        if (self::$alreadyRan === null) {
+        if (self::$alreadyRan === null || $multipleRun) {
             self::$alreadyRan = true;
-            $this->slimApp->run();
+            return $this->slimApp->run($silent);
         }
+        return null;
     }
 
     private function setupRoutes()
     {
         $application = $this;
         $this->slimApp->get('/products', function (Request $request, Response $response, array $args) use ($application) {
-
             $repository = $application->createProductRepository();
             $search = $application->createSearchFromGet($request->getQueryParams());
 
@@ -110,7 +110,7 @@ final class Application
                 $pagination,
                 $sort
             );
-        }catch(\Exception $e) {
+        }catch(\Throwable $e) {
             return new Search;
         }
     }
@@ -128,6 +128,5 @@ final class Application
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         return new ProductRepository($pdo);
-
     }
 }

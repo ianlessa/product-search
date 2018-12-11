@@ -7,6 +7,7 @@ use PHPUnit\DbUnit\Database\Connection;
 use PHPUnit\DbUnit\DataSet\IDataSet;
 use PHPUnit\DbUnit\TestCaseTrait;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 abstract class AbstractBaseIntegrationTest extends TestCase
 {
@@ -16,6 +17,8 @@ abstract class AbstractBaseIntegrationTest extends TestCase
     protected $pdo;
     /** @var array */
     protected $config;
+    /** @var stdClass */
+    protected $expectedData;
 
     use TestCaseTrait;
 
@@ -26,6 +29,9 @@ abstract class AbstractBaseIntegrationTest extends TestCase
      */
     protected function getConnection()
     {
+        if ($this->pdo === null) {
+            $this->createPdo();
+        }
         return $this->createDefaultDBConnection($this->pdo, 'product_search_test');
     }
 
@@ -36,10 +42,35 @@ abstract class AbstractBaseIntegrationTest extends TestCase
      */
     protected function getDataSet()
     {
-        return $this->createMySQLXMLDataSet('Test/Integration/mockData.xml');
+        $path = 'Test/Integration/mockData.xml';
+        if (!file_exists($path)) {
+            $path = '../mockData.xml';
+        }
+        return $this->createMySQLXMLDataSet($path);
     }
 
     public function setUp()
+    {
+        $expectedDataPath = 'Test/Integration/expectedResults.json';
+        if (!file_exists($expectedDataPath)) {
+            $expectedDataPath = '../expectedResults.json';
+        }
+
+        $expectedData = file_get_contents($expectedDataPath);
+        $this->expectedData = json_decode($expectedData);
+
+        $path = 'Test/Integration/mockData.xml';
+        if (!file_exists($expectedDataPath)) {
+            $path = '../mockData.xml';
+        }
+        return $this->createMySQLXMLDataSet($path);
+
+
+        $this->setConfig();
+        $this->createPdo();
+    }
+
+    protected function setConfig()
     {
         $config = [
             "DB_HOST" => "",
@@ -54,7 +85,11 @@ abstract class AbstractBaseIntegrationTest extends TestCase
         }
 
         $this->config = $config;
+    }
 
+    protected function createPdo()
+    {
+        $config = $this->config;
         $host = $config['DB_HOST'] ?? 'localhost';
         $port = $config['DB_PORT'] ?? '3306';
         $database = $config['DB_DATABASE'] ?? 'product_search';
