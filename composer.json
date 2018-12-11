@@ -9,6 +9,7 @@
     "autoload": {
         "psr-4": {
             "IanLessa\\ProductSearch\\": "src/",
+            "IanLessa\\ProductSearch\\Test\\": "Test/",
             "IanLessa\\ProductSearchApp\\": "app/"
         }
     },

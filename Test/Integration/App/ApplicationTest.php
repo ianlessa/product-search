@@ -8,80 +8,21 @@ use IanLessa\ProductSearch\Aggregates\Search;
 use IanLessa\ProductSearch\Aggregates\Sort;
 use IanLessa\ProductSearch\Repositories\MySQL\Product;
 use IanLessa\ProductSearch\SearchService;
+use IanLessa\ProductSearch\Test\Integration\AbstractBaseIntegrationTest;
 use IanLessa\ProductSearchApp\Application;
-use PDO;
-use PHPUnit\DbUnit\TestCaseTrait;
-use PHPUnit\Framework\TestCase;
 use Slim\Http\Request;
 
-class ApplicationTest extends TestCase
+class ApplicationTest extends AbstractBaseIntegrationTest
 {
     /**
      * @var Application
      */
     private $appInstance;
-    /**
-     * @var PDO
-     */
-    private $pdo;
-
-    use TestCaseTrait;
-
-
-    /**
-     * @return PHPUnit\DbUnit\Database\Connection
-     */
-    public function getConnection()
-    {
-        $this->connection = $this->createDefaultDBConnection($this->pdo, 'product_search_test');
-
-        return $this->connection;
-    }
-
-    /**
-     * @return PHPUnit\DbUnit\DataSet\IDataSet
-     */
-    public function getDataSet()
-    {
-        return $this->createMySQLXMLDataSet('Test/Integration/mockData.xml');
-    }
 
     public function setUp()
     {
-        $config = [
-            "DB_HOST" => "",
-            "DB_PORT" => "",
-            "DB_DATABASE" => "",
-            "DB_USERNAME" => "",
-            "DB_PASSWORD" => ""
-        ];
-
-        foreach ($config as $key => $value) {
-            $config[$key] = $GLOBALS[$key];
-        }
-
-        $this->appInstance = new Application($config);
-
-
-        $host = $config['DB_HOST'] ?? 'localhost';
-        $port = $config['DB_PORT'] ?? '3306';
-        $database = $config['DB_DATABASE'] ?? 'product_search';
-        $username = $config['DB_USERNAME'] ?? 'root';
-        $password = $config['DB_PASSWORD'] ?? 'root';
-        $dsn = "mysql:host=$host;port=$port;dbname=$database";
-
-        $this->pdo = new PDO($dsn, $username, $password);
-
-        $this->pdo->exec('
-            create table if not exists product
-            (
-              id          int auto_increment
-                primary key,
-              name        varchar(45) not null,
-              brand       varchar(25) not null,
-              description text        not null
-            );
-        ');
+        parent::setUp();
+        $this->appInstance = new Application($this->config);
     }
 
     /**
