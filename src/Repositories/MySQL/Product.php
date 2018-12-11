@@ -5,27 +5,15 @@ use IanLessa\ProductSearch\Aggregates\Product as ProductEntity;
 use IanLessa\ProductSearch\Interfaces\RepositoryInterface;
 use IanLessa\ProductSearch\Aggregates\Search;
 use IanLessa\ProductSearch\Aggregates\SearchResult;
+use IanLessa\ProductSearch\Repositories\AbstractRepository;
 use PDO;
 
-class Product implements RepositoryInterface
+class Product extends AbstractRepository
 {
     /**
-     * @var PDO 
+     * @var PDO
      */
-    private $pdo;
-
-    public function __construct(
-        string $host,
-        int $port,
-        string $username,
-        string $password,
-        string $database
-    ) {
-        $dsn = "mysql:host=$host;port=$port;dbname=$database";
-
-        $this->pdo = new PDO($dsn, $username, $password);
-        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }
+    protected $connection;
 
     public function fetch(Search $search) : SearchResult
     {
@@ -34,7 +22,7 @@ class Product implements RepositoryInterface
         $query .= $this->getSortQuery($search);
         $query .= $this->getPaginationQuery();
 
-        $statement = $this->pdo->prepare($query);
+        $statement = $this->connection->prepare($query);
 
         $this->prepareWhereQuery($statement, $search);
         $this->preparePaginationQuery($statement, $search);
@@ -46,7 +34,7 @@ class Product implements RepositoryInterface
 
     private function getMaxRows() : int
     {
-        $result = $this->pdo->query("SELECT FOUND_ROWS()")->fetchAll();
+        $result = $this->connection->query("SELECT FOUND_ROWS()")->fetchAll();
 
         return $result[0][0];
     }
@@ -143,5 +131,10 @@ class Product implements RepositoryInterface
             $this->getMaxRows(),
             $results
         );
+    }
+
+    protected function getConnectionClass(): string
+    {
+        return PDO::class;
     }
 }

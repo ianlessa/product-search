@@ -2,4 +2,5 @@
 
 require 'vendor/autoload.php';
 
-\IanLessa\ProductSearchApp\Application::run();
+$app = new \IanLessa\ProductSearchApp\Application('test');
+$app->run();

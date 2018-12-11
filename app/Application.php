@@ -7,6 +7,7 @@ use IanLessa\ProductSearch\Repositories\MySQL\Product as ProductRepository;
 use IanLessa\ProductSearch\Aggregates\Search;
 use IanLessa\ProductSearch\SearchService;
 use IanLessa\ProductSearch\Aggregates\Sort;
+use PDO;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
@@ -14,8 +15,6 @@ final class Application
 {
     const NOT_FOUND_MESSAGE = 'Page not found';
 
-    /** @var Application */
-    static private $instance;
     /** @var bool */
     static private $alreadyRan;
     /**
@@ -23,7 +22,7 @@ final class Application
      */
     private $slimApp;
 
-    private function __construct()
+    public function __construct($config)
     {
         $c['notFoundHandler'] = function ($c) {
             return function ($request, $response) use ($c) {
@@ -34,6 +33,7 @@ final class Application
         };
 
         $this->slimApp = new \Slim\App($c);
+        $this->setupRoutes();
     }
 
     public function getSlimApp()
@@ -41,30 +41,21 @@ final class Application
         return $this->slimApp;
     }
 
-    static public function getInstance()
-    {
-        if (self::$instance === null) {
-            self::$instance = new self;
-            self::$instance->setupRoutes();
-        }
-        return self::$instance;
-    }
-
-    static public function run()
+    public function run()
     {
         if (self::$alreadyRan === null) {
             self::$alreadyRan = true;
-            $instance = self::getInstance();
-            $instance->slimApp->run();
+            $this->slimApp->run();
         }
     }
 
     private function setupRoutes()
     {
-        $this->slimApp->get('/products', function (Request $request, Response $response, array $args) {
+        $application = $this;
+        $this->slimApp->get('/products', function (Request $request, Response $response, array $args) use ($application) {
 
-            $repository = self::$instance->createProductRepository();
-            $search = self::$instance->createSearchFromGet($request->getQueryParams());
+            $repository = $application->createProductRepository();
+            $search = $application->createSearchFromGet($request->getQueryParams());
 
             $searchService = new SearchService($repository);
             $results = $searchService->searchProduct($search);
@@ -121,13 +112,17 @@ final class Application
 
     public function createProductRepository()
     {
-        return new ProductRepository(
-            'localhost',
-            3306,
-            'root',
-            'root',
-            'product_search'
-        );
+        $host = 'localhost';
+        $port = '3306';
+        $database = 'product_search';
+        $username = 'root';
+        $password = 'root';
+        $dsn = "mysql:host=$host;port=$port;dbname=$database";
+
+        $pdo = new PDO($dsn, $username, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        return new ProductRepository($pdo);
 
     }
 }
