@@ -9,6 +9,8 @@ use IanLessa\ProductSearch\Aggregates\Sort;
 use IanLessa\ProductSearch\Repositories\MySQL\Product;
 use IanLessa\ProductSearch\SearchService;
 use IanLessa\ProductSearchApp\Application;
+use PDO;
+use PHPUnit\DbUnit\TestCaseTrait;
 use PHPUnit\Framework\TestCase;
 use Slim\Http\Request;
 
@@ -18,10 +20,68 @@ class ApplicationTest extends TestCase
      * @var Application
      */
     private $appInstance;
+    /**
+     * @var PDO
+     */
+    private $pdo;
+
+    use TestCaseTrait;
+
+
+    /**
+     * @return PHPUnit\DbUnit\Database\Connection
+     */
+    public function getConnection()
+    {
+        $this->connection = $this->createDefaultDBConnection($this->pdo, 'product_search_test');
+
+        return $this->connection;
+    }
+
+    /**
+     * @return PHPUnit\DbUnit\DataSet\IDataSet
+     */
+    public function getDataSet()
+    {
+        return $this->createMySQLXMLDataSet('file.xml');
+    }
 
     public function setUp()
     {
-        $this->appInstance = Application::getInstance();
+        $config = [
+            "DB_HOST" => "",
+            "DB_PORT" => "",
+            "DB_DATABASE" => "",
+            "DB_USERNAME" => "",
+            "DB_PASSWORD" => ""
+        ];
+
+        foreach ($config as $key => $value) {
+            $config[$key] = $GLOBALS[$key];
+        }
+
+        $this->appInstance = new Application($config);
+
+
+        $host = $config['DB_HOST'] ?? 'localhost';
+        $port = $config['DB_PORT'] ?? '3306';
+        $database = $config['DB_DATABASE'] ?? 'product_search';
+        $username = $config['DB_USERNAME'] ?? 'root';
+        $password = $config['DB_PASSWORD'] ?? 'root';
+        $dsn = "mysql:host=$host;port=$port;dbname=$database";
+
+        $this->pdo = new PDO($dsn, $username, $password);
+
+        $this->pdo->exec('
+            create table if not exists product
+            (
+              id          int auto_increment
+                primary key,
+              name        varchar(45) not null,
+              brand       varchar(25) not null,
+              description text        not null
+            );
+        ');
     }
 
     /**
@@ -29,9 +89,9 @@ class ApplicationTest extends TestCase
      * @covers \IanLessa\ProductSearchApp\Application::createProductRepository
      *
      * @uses \IanLessa\ProductSearchApp\Application::__construct
-     * @uses \IanLessa\ProductSearchApp\Application::getInstance()
      * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::__construct
      * @uses \IanLessa\ProductSearchApp\Application::setupRoutes
+     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getConnectionClass
      *
      */
     public function createProductRepositoryShouldReturnMySQLProductRepository()
@@ -47,7 +107,6 @@ class ApplicationTest extends TestCase
      * @covers \IanLessa\ProductSearchApp\Application::createSearchFromGet
      *
      * @uses \IanLessa\ProductSearchApp\Application::__construct
-     * @uses \IanLessa\ProductSearchApp\Application::getInstance
      * @uses \IanLessa\ProductSearch\Aggregates\Pagination::__construct
      * @uses \IanLessa\ProductSearch\Aggregates\Pagination::default
      * @uses \IanLessa\ProductSearch\Aggregates\Pagination::setPerPage
@@ -60,6 +119,7 @@ class ApplicationTest extends TestCase
      * @uses \IanLessa\ProductSearch\Aggregates\Sort::asc
      * @uses \IanLessa\ProductSearch\Aggregates\Sort::setType
      * @uses \IanLessa\ProductSearch\Aggregates\Sort::setValue
+     * @uses \IanLessa\ProductSearchApp\Application::setupRoutes
      *
      */
     public function onCorrectParamsCreateSearchFromGetShouldReturnCorrectSearchObject()
@@ -89,7 +149,6 @@ class ApplicationTest extends TestCase
      * @covers \IanLessa\ProductSearchApp\Application::createSearchFromGet
      *
      * @uses \IanLessa\ProductSearchApp\Application::__construct
-     * @uses \IanLessa\ProductSearchApp\Application::getInstance
      * @uses \IanLessa\ProductSearch\Aggregates\Pagination::__construct
      * @uses \IanLessa\ProductSearch\Aggregates\Pagination::default
      * @uses \IanLessa\ProductSearch\Aggregates\Pagination::setPerPage
@@ -99,6 +158,7 @@ class ApplicationTest extends TestCase
      * @uses \IanLessa\ProductSearch\Aggregates\Search::setPagination
      * @uses \IanLessa\ProductSearch\Aggregates\Search::setSort
      * @uses \IanLessa\ProductSearch\Exceptions\InvalidParamException::__construct
+     * @uses \IanLessa\ProductSearchApp\Application::setupRoutes
      *
      */
     public function onIncorrectParamsCreateSearchFromGetShouldReturnDefaultSearchObject()
@@ -123,7 +183,6 @@ class ApplicationTest extends TestCase
      * @covers \IanLessa\ProductSearchApp\Application::getSlimApp
      *
      * @uses \IanLessa\ProductSearchApp\Application::__construct
-     * @uses \IanLessa\ProductSearchApp\Application::getInstance
      *
      */
     public function aInvalidRouteShouldReturnNotFound()
@@ -147,7 +206,6 @@ class ApplicationTest extends TestCase
      * @covers \IanLessa\ProductSearchApp\Application::setupRoutes
      * @covers \IanLessa\ProductSearchApp\Application::getSlimApp
      * @covers \IanLessa\ProductSearchApp\Application::__construct
-     * @covers \IanLessa\ProductSearchApp\Application::getInstance
      * @covers \IanLessa\ProductSearchApp\Application::createProductRepository
      * @covers \IanLessa\ProductSearchApp\Application::createSearchFromGet
      *
@@ -196,16 +254,11 @@ class ApplicationTest extends TestCase
      * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::prepareWhereQuery
      * @uses \IanLessa\ProductSearch\SearchService::__construct
      * @uses \IanLessa\ProductSearch\SearchService::searchProduct
+     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getConnectionClass
      */
     public function productRouteWithoutParamsShouldReturnDefaultProductSearch()
     {
-        $repository = new Product(
-            'localhost',
-            '3306',
-            'root',
-            'root',
-            'product_search'
-        );
+        $repository = new Product($this->pdo);
         $searchService = new SearchService($repository);
         $defaultResult = $searchService->searchProduct(new Search());
         $defaultResult = json_encode($defaultResult);
@@ -232,7 +285,6 @@ class ApplicationTest extends TestCase
      * @covers \IanLessa\ProductSearchApp\Application::setupRoutes
      * @covers \IanLessa\ProductSearchApp\Application::getSlimApp
      * @covers \IanLessa\ProductSearchApp\Application::__construct
-     * @covers \IanLessa\ProductSearchApp\Application::getInstance
      * @covers \IanLessa\ProductSearchApp\Application::createProductRepository
      * @covers \IanLessa\ProductSearchApp\Application::createSearchFromGet
      *
@@ -288,16 +340,11 @@ class ApplicationTest extends TestCase
      * @uses \IanLessa\ProductSearch\Aggregates\Sort::jsonSerialize
      * @uses \IanLessa\ProductSearch\Aggregates\Sort::setType
      * @uses \IanLessa\ProductSearch\Aggregates\Sort::setValue
+     * @uses \IanLessa\ProductSearch\Repositories\MySQL\Product::getConnectionClass
      */
     public function productRouteWithParamsShouldReturnCorrectSearchResults()
     {
-        $repository = new Product(
-            'localhost',
-            '3306',
-            'root',
-            'root',
-            'product_search'
-        );
+        $repository = new Product($this->pdo);
 
         $queryString = 'q=black&per_page=7&sort=desc:description';
         $params = [];
@@ -305,7 +352,7 @@ class ApplicationTest extends TestCase
             $data = explode('=', $param);
             $params[$data[0]] = $data[1];
         }
-        $search = Application::getInstance()->createSearchFromGet($params);
+        $search = $this->appInstance->createSearchFromGet($params);
 
         $searchService = new SearchService($repository);
         $defaultResult = $searchService->searchProduct($search);
