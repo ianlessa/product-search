@@ -22,8 +22,13 @@ final class Application
      */
     private $slimApp;
 
-    public function __construct($config)
+    private $config;
+
+    public function __construct(array $config = null)
     {
+
+        $this->config = $config;
+
         $c['notFoundHandler'] = function ($c) {
             return function ($request, $response) use ($c) {
                 return $response->withStatus(404)
@@ -112,11 +117,11 @@ final class Application
 
     public function createProductRepository()
     {
-        $host = 'localhost';
-        $port = '3306';
-        $database = 'product_search';
-        $username = 'root';
-        $password = 'root';
+        $host = $this->config['DB_HOST'] ?? 'localhost';
+        $port = $this->config['DB_PORT'] ?? '3306';
+        $database = $this->config['DB_DATABASE'] ?? 'product_search';
+        $username = $this->config['DB_USERNAME'] ?? 'root';
+        $password = $this->config['DB_PASSWORD'] ?? 'root';
         $dsn = "mysql:host=$host;port=$port;dbname=$database";
 
         $pdo = new PDO($dsn, $username, $password);
