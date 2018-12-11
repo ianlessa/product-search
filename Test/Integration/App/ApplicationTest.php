@@ -43,7 +43,7 @@ class ApplicationTest extends TestCase
      */
     public function getDataSet()
     {
-        return $this->createMySQLXMLDataSet('file.xml');
+        return $this->createMySQLXMLDataSet('Test/Integration/mockData.xml');
     }
 
     public function setUp()
