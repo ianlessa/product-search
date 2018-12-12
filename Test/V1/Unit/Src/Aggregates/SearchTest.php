@@ -74,7 +74,6 @@ class SearchTest extends TestCase
      * @uses \IanLessa\ProductSearch\V1\Aggregates\Sort::asc
      * @uses \IanLessa\ProductSearch\V1\Aggregates\Sort::setType
      * @uses \IanLessa\ProductSearch\V1\Aggregates\Sort::setValue
-     *
      */
     public function anDefaultSearchShouldHaveTheCorrectParams()
     {

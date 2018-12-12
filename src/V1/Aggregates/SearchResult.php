@@ -16,11 +16,6 @@ class SearchResult implements JsonSerializable
     private $results;
 
     /**
-     * @var int 
-     */
-    private $rowCount;
-
-    /**
      * @var int
      */
     private $maxRows;

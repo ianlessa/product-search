@@ -1,16 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ian
- * Date: 11/12/18
- * Time: 11:09
- */
 
 namespace IanLessa\ProductSearch\V1\Repositories;
 
-
-use IanLessa\ProductSearch\V1\Aggregates\Search;
-use IanLessa\ProductSearch\V1\Aggregates\SearchResult;
 use IanLessa\ProductSearch\V1\Interfaces\RepositoryInterface;
 use Exception;
 

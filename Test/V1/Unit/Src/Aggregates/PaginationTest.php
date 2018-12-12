@@ -9,14 +9,22 @@ use stdClass;
 
 class PaginationTest extends TestCase
 {
-    /** @var int */
+    /**
+     * @var int 
+     */
     private $sampleStart;
-    /** @var int */
+    /**
+     * @var int 
+     */
     private $samplePerPage;
 
-    /** @var int */
+    /**
+     * @var int 
+     */
     private $sampleIncorrectStart;
-    /** @var int */
+    /**
+     * @var int 
+     */
     private $sampleIncorrectPerPage;
 
 
@@ -42,8 +50,8 @@ class PaginationTest extends TestCase
     public function defaultShouldReturnDefaultPagination()
     {
         $correctPagination = new Pagination(
-        Pagination::DEFAULT_START,
-        Pagination::DEFAULT_PERPAGE
+            Pagination::DEFAULT_START,
+            Pagination::DEFAULT_PERPAGE
         );
 
         $pagination = Pagination::default();
@@ -137,7 +145,6 @@ class PaginationTest extends TestCase
      * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::getStart
      * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::setPerPage
      * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::setStart
-     *
      */
     public function aPaginationShouldBeComparable()
     {

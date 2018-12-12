@@ -1,8 +1,6 @@
 <?php
 namespace IanLessa\ProductSearch\V1\Exceptions;
 
-use Throwable;
-
 class InvalidParamException extends \Exception
 {
     public function __construct(string $message, $value)

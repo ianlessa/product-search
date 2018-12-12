@@ -31,14 +31,12 @@ class ApplicationTest extends AbstractBaseIntegrationTest
      * @uses \IanLessa\ProductSearch\V1\Repositories\MySQL\Product::__construct
      * @uses \IanLessa\ProductSearchApp\Application::setupRoutes
      * @uses \IanLessa\ProductSearch\V1\Repositories\MySQL\Product::getConnectionClass
-     *
      */
     public function createProductRepositoryShouldReturnMySQLProductRepository()
     {
         $repository = $this->appInstance->createProductRepository();
 
         $this->assertInstanceOf(Product::class, $repository);
-
     }
 
     /**
@@ -51,10 +49,12 @@ class ApplicationTest extends AbstractBaseIntegrationTest
      */
     public function invalidRouteShouldReturn404()
     {
-        $env = \Slim\Http\Environment::mock([
+        $env = \Slim\Http\Environment::mock(
+            [
             'REQUEST_METHOD' => 'GET',
             'REQUEST_URI' => '/invalid',
-        ]);
+            ]
+        );
 
         $req = Request::createFromEnvironment($env);
         $this->appInstance->getSlimApp()->getContainer()['request'] = $req;

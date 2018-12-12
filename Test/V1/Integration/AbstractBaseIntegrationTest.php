@@ -15,9 +15,13 @@ abstract class AbstractBaseIntegrationTest extends TestCase
      * @var PDO
      */
     protected $pdo;
-    /** @var array */
+    /**
+     * @var array 
+     */
     protected $config;
-    /** @var stdClass */
+    /**
+     * @var stdClass 
+     */
     protected $expectedData;
 
     use TestCaseTrait;
@@ -59,7 +63,8 @@ abstract class AbstractBaseIntegrationTest extends TestCase
 
         $this->pdo = new PDO($dsn, $username, $password);
 
-        $this->pdo->exec('
+        $this->pdo->exec(
+            '
             create table if not exists product
             (
               id          int auto_increment
@@ -68,7 +73,8 @@ abstract class AbstractBaseIntegrationTest extends TestCase
               brand       varchar(25) not null,
               description text        not null
             );
-        ');
+        '
+        );
     }
 
     protected function loadExpectedData()
@@ -83,26 +89,26 @@ abstract class AbstractBaseIntegrationTest extends TestCase
     }
 
     /**
-      * Returns the test database connection.
-      *
-      * @return Connection
-      */
-     protected function getConnection()
-     {
-         return $this->createDefaultDBConnection($this->pdo, $this->config['DB_DATABASE']);
-     }
+     * Returns the test database connection.
+     *
+     * @return Connection
+     */
+    protected function getConnection()
+    {
+        return $this->createDefaultDBConnection($this->pdo, $this->config['DB_DATABASE']);
+    }
 
      /**
       * Returns the test dataset.
       *
       * @return IDataSet
       */
-     protected function getDataSet()
-     {
-         $path = 'Test/V1/Integration/mockData.xml';
-         if (!file_exists($path)) {
-             $path = '../mockData.xml';
-         }
-         return $this->createMySQLXMLDataSet($path);
-     }
- }
+    protected function getDataSet()
+    {
+        $path = 'Test/V1/Integration/mockData.xml';
+        if (!file_exists($path)) {
+            $path = '../mockData.xml';
+        }
+        return $this->createMySQLXMLDataSet($path);
+    }
+}

@@ -31,7 +31,6 @@ class SearchServiceTest extends TestCase
      * @uses \IanLessa\ProductSearch\V1\Aggregates\Sort::setValue
      * @uses \IanLessa\ProductSearch\V1\SearchService::__construct
      * @uses \IanLessa\ProductSearch\V1\SearchService::createSearchFromGet
-     *
      */
     public function onCorrectParamsCreateSearchFromGetShouldReturnCorrectSearchObject()
     {
@@ -43,11 +42,13 @@ class SearchServiceTest extends TestCase
             'sort' => 'asc:description'
         ];
         $correctSearch = new Search();
-        $correctSearch->setPagination(new Pagination(1,20));
-        $correctSearch->setFilters([
+        $correctSearch->setPagination(new Pagination(1, 20));
+        $correctSearch->setFilters(
+            [
             'brand' => "brand_name",
             'name' => "term"
-        ]);
+            ]
+        );
         $correctSearch->setSort(Sort::asc('description'));
 
         $searchService = new SearchService(new ProductRepositoryMock(null));

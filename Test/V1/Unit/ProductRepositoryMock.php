@@ -15,6 +15,5 @@ class ProductRepositoryMock implements RepositoryInterface
 
     public function fetch(Search $search): SearchResult
     {
-        // TODO: Implement fetch() method.
     }
 }

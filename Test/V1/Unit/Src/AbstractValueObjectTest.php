@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ian
- * Date: 10/12/18
- * Time: 20:30
- */
 
 namespace IanLessa\ProductSearch\Test\V1\Unit\Src;
 

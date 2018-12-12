@@ -25,7 +25,7 @@ class SearchService
         return $this->repository->fetch($search);
     }
 
-    public function createSearchFromGet($params) : Search
+    public function createSearchFromGet(array $params) : Search
     {
         try {
             $filters = [];

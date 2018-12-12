@@ -5,7 +5,7 @@ namespace IanLessa\ProductSearch\V1\Aggregates;
 final class Search implements \JsonSerializable
 {
     /**
-     * @var Filter[]
+     * @var array
      */
     private $filters;
     /**
@@ -21,7 +21,7 @@ final class Search implements \JsonSerializable
     /**
      * Search constructor.
      *
-     * @param Filter[]   $filters
+     * @param array      $filters
      * @param Pagination $pagination
      * @param Sort       $sort
      */
@@ -36,7 +36,7 @@ final class Search implements \JsonSerializable
     }
 
     /**
-     * @return Filter[]
+     * @return array
      */
     public function getFilters(): array
     {
@@ -44,7 +44,7 @@ final class Search implements \JsonSerializable
     }
 
     /**
-     * @param  Filter[] $filters
+     * @param  array $filters
      * @return Search
      */
     public function setFilters(?array $filters): Search

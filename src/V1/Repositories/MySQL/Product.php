@@ -2,7 +2,6 @@
 namespace IanLessa\ProductSearch\V1\Repositories\MySQL;
 
 use IanLessa\ProductSearch\V1\Aggregates\Product as ProductEntity;
-use IanLessa\ProductSearch\V1\Interfaces\RepositoryInterface;
 use IanLessa\ProductSearch\V1\Aggregates\Search;
 use IanLessa\ProductSearch\V1\Aggregates\SearchResult;
 use IanLessa\ProductSearch\V1\Repositories\AbstractRepository;

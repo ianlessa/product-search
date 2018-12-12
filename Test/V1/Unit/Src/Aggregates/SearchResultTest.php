@@ -62,9 +62,9 @@ class SearchResultTest extends TestCase
         $serializedObject = json_encode($object);
 
         $searchResult = new SearchResult(
-          $this->sampleSearch,
-          $this->sampleMaxRows,
-          $this->sampleResults
+            $this->sampleSearch,
+            $this->sampleMaxRows,
+            $this->sampleResults
         );
 
         $serializedSearchResult = json_encode($searchResult);
