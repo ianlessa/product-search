@@ -3,5 +3,5 @@
   "DB_PORT" : "3306",
   "DB_DATABASE" : "product_search",
   "DB_USERNAME" : "root",
-  "DB_PASSWORD" : "root"
+  "DB_PASSWORD" : ""
 }
