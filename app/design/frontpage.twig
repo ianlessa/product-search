@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+            crossorigin="anonymous"
+    >
+
+    <title>Product search</title>
+</head>
+<body>
+    <div class="container-fluid ">
+        <div class="jumbotron mx-auto align-items-center" style="width: 80%">
+            <h1 class="text-center">Product Search</h1>
+            <hr />
+            <div class="row">
+                <div class="col-sm-6">
+                        <form>
+                            <div class="form-group">
+                                <label for="product-name">Product name</label>
+                                <input type="text" class="form-control" id="product-name" placeholder="Enter product name">
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="filter-by">Filter</label>
+                                    <select class="form-control" id="filter-by">
+                                        <option>No filter</option>
+                                        <option value='id'>Id</option>
+                                        <option value='brand'>Brand</option>
+                                        <option value='description'>Description</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="filter-by-term">Filter term</label>
+                                    <input type="text" class="form-control" id="filter-by-term" placeholder="Enter filter term">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="sort">Sort</label>
+                                    <select class="form-control" id="sort">
+                                        <option>No sort</option>
+                                        <option value='asc'>Ascending</option>
+                                        <option value='desc'>Descending</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="sort-by">Sort By</label>
+                                    <select class="form-control" id="sort-by">
+                                        <option>No sort</option>
+                                        <option value='id'>Id</option>
+                                        <option value='name'>Name</option>
+                                        <option value='brand'>Brand</option>
+                                        <option value='description'>Description</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="per-page">Results per page</label>
+                                    <select class="form-control" id="per-page">
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-primary">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <h3>Results</h3>
+                        </div>
+                        <div class="row">
+                            <nav aria-label="...">
+                                <ul class="pagination flex-wrap">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item active">
+                                        <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">6</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">7</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">8</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">9</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">10</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">11</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">12</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">13</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">14</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">15</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">16</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">17</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="row">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Brand</th>
+                                    <th scope="col">Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                    <td>@mdo</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Larry</td>
+                                    <td>the Bird</td>
+                                    <td>@twitter</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row form-group">
+                        <label for="query-string-example">Query string</label>
+                        <input class = 'col-sm-12' type="text" id='query-string-example' value="queryStringExample" disabled>
+                    </div>
+                    <div class="row">
+                        <pre>
+{
+   "search":{
+      "filters":[
+
+      ],
+      "pagination":{
+         "start":0,
+         "perPage":3
+      },
+      "sort":null
+   },
+   "rowCount":3,
+   "maxRows":17,
+   "results":[
+      {
+         "id":"1",
+         "name":"Flowered Dress",
+         "brand":"Sunflower",
+         "description":"A beautiful flowered dress perfect for a flowered person."
+      },
+      {
+         "id":"2",
+         "name":"Daisy Hat",
+         "brand":"Sunflower",
+         "description":"A cute daisy-shaped hat which is the latest trend in the garden!"
+      },
+      {
+         "id":"3",
+         "name":"Banana Pajama",
+         "brand":"Banana Boat",
+         "description":"A yellow pajama with brown ellipses on it."
+      }
+   ]
+}
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</body>
+</html>
