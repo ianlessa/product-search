@@ -4,6 +4,7 @@ namespace IanLessa\ProductSearchApp;
 
 use IanLessa\ProductSearch\V1\Repositories\MySQL\Product as ProductRepositoryV1;
 use IanLessa\ProductSearch\V1\SearchService  as SearchServiceV1;
+use IanLessa\ProductSearchApp\Services\Frontend;
 use PDO;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -57,6 +58,16 @@ final class Application
     private function setupRoutes()
     {
         $application = $this;
+
+        $this->slimApp->get('/', function (Request $request, Response $response, array $args) use ($application) {
+            $frontendService = new Frontend();
+            $frontPage = $frontendService->getFrontPage();
+
+            $response->getBody()->write($frontPage);
+
+            return $response;
+        });
+
         $this->slimApp->get(
             '/v1/products', function (Request $request, Response $response, array $args) use ($application) {
                 $repository = $application->createProductRepository();
