@@ -1,6 +1,6 @@
 <?php
 
-namespace IanLessa\ProductSearch\Test\V1\Unit;
+namespace IanLessa\ProductSearch\Test\V1\Unit\Src;
 
 use \IanLessa\ProductSearch\V1\Aggregates\Product;
 use PHPUnit\Framework\TestCase;

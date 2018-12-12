@@ -43,48 +43,6 @@ class ApplicationTest extends AbstractBaseIntegrationTest
 
     /**
      * @test
-     * @covers \IanLessa\ProductSearchApp\Application::createSearchFromGet
-     *
-     * @uses \IanLessa\ProductSearchApp\Application::__construct
-     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::__construct
-     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::default
-     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::setPerPage
-     * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::setStart
-     * @uses \IanLessa\ProductSearch\V1\Aggregates\Search::__construct
-     * @uses \IanLessa\ProductSearch\V1\Aggregates\Search::setFilters
-     * @uses \IanLessa\ProductSearch\V1\Aggregates\Search::setPagination
-     * @uses \IanLessa\ProductSearch\V1\Aggregates\Search::setSort
-     * @uses \IanLessa\ProductSearch\V1\Aggregates\Sort::__construct
-     * @uses \IanLessa\ProductSearch\V1\Aggregates\Sort::asc
-     * @uses \IanLessa\ProductSearch\V1\Aggregates\Sort::setType
-     * @uses \IanLessa\ProductSearch\V1\Aggregates\Sort::setValue
-     * @uses \IanLessa\ProductSearchApp\Application::setupRoutes
-     *
-     */
-    public function onCorrectParamsCreateSearchFromGetShouldReturnCorrectSearchObject()
-    {
-        $params = [
-            'q' => 'term',
-            'start_page' => '1',
-            'per_page' => '20',
-            'filter' => 'brand:brand_name',
-            'sort' => 'asc:description'
-        ];
-        $correctSearch = new Search();
-        $correctSearch->setPagination(new Pagination(1,20));
-        $correctSearch->setFilters([
-            'brand' => "brand_name",
-            'name' => "term"
-        ]);
-        $correctSearch->setSort(Sort::asc('description'));
-
-        $search = $this->appInstance->createSearchFromGet($params);
-
-        $this->assertEquals($correctSearch, $search);
-    }
-
-    /**
-     * @test
      *
      * @covers \IanLessa\ProductSearchApp\Application::__construct
      * @covers \IanLessa\ProductSearchApp\Application::getSlimApp
@@ -112,7 +70,6 @@ class ApplicationTest extends AbstractBaseIntegrationTest
      *
      * @covers \IanLessa\ProductSearchApp\Application::__construct
      * @covers \IanLessa\ProductSearchApp\Application::createProductRepository
-     * @covers \IanLessa\ProductSearchApp\Application::createSearchFromGet
      * @covers \IanLessa\ProductSearchApp\Application::getSlimApp
      * @covers \IanLessa\ProductSearchApp\Application::run
      * @covers \IanLessa\ProductSearchApp\Application::setupRoutes
@@ -169,6 +126,7 @@ class ApplicationTest extends AbstractBaseIntegrationTest
      * @uses \IanLessa\ProductSearch\V1\Repositories\MySQL\Product::preparePaginationQuery
      * @uses \IanLessa\ProductSearch\V1\Repositories\MySQL\Product::prepareWhereQuery
      * @uses \IanLessa\ProductSearch\V1\SearchService::__construct
+     * @uses \IanLessa\ProductSearch\V1\SearchService::createSearchFromGet
      * @uses \IanLessa\ProductSearch\V1\SearchService::searchProduct
      */
     public function variousQueriesShouldReturnTheCorrectResult()

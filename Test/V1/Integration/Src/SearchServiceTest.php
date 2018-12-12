@@ -14,6 +14,7 @@ class SearchServiceTest extends AbstractBaseIntegrationTest
      * @test
      *
      * @covers \IanLessa\ProductSearch\V1\SearchService::searchProduct
+     * @covers \IanLessa\ProductSearch\V1\SearchService::createSearchFromGet
      * @covers \IanLessa\ProductSearch\V1\SearchService::__construct
      * @covers \IanLessa\ProductSearch\V1\Repositories\AbstractRepository::__construct
      * @covers \IanLessa\ProductSearch\V1\Repositories\MySQL\Product::fetch
@@ -27,9 +28,6 @@ class SearchServiceTest extends AbstractBaseIntegrationTest
      * @covers \IanLessa\ProductSearch\V1\Repositories\MySQL\Product::preparePaginationQuery
      * @covers \IanLessa\ProductSearch\V1\Repositories\MySQL\Product::prepareWhereQuery
      *
-     * @uses \IanLessa\ProductSearchApp\Application::__construct
-     * @uses \IanLessa\ProductSearchApp\Application::createSearchFromGet
-     * @uses \IanLessa\ProductSearchApp\Application::setupRoutes
      * @uses \IanLessa\ProductSearch\V1\AbstractEntity::getId
      * @uses \IanLessa\ProductSearch\V1\AbstractEntity::setId
      * @uses \IanLessa\ProductSearch\V1\Aggregates\Pagination::__construct
@@ -73,17 +71,15 @@ class SearchServiceTest extends AbstractBaseIntegrationTest
      */
     public function variousParamsShouldReturnTheCorrectSearchResult()
     {
-        $app = new Application([]);
-
         foreach ($this->expectedData->tests as $expectedData) {
             if (!isset($expectedData->query)) {
                 continue;
             }
             $params = $this->queryStringToParams($expectedData->query);
-            $search = $app->createSearchFromGet($params);
 
             $repository = new Product($this->pdo);
             $searchService = new SearchService($repository);
+            $search = $searchService->createSearchFromGet($params);
             $searchResult = $searchService->searchProduct($search);
 
             $searchResult = json_encode($searchResult);

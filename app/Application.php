@@ -2,11 +2,8 @@
 
 namespace IanLessa\ProductSearchApp;
 
-use IanLessa\ProductSearch\V1\Aggregates\Pagination as PaginationV1;
 use IanLessa\ProductSearch\V1\Repositories\MySQL\Product as ProductRepositoryV1;
-use IanLessa\ProductSearch\V1\Aggregates\Search as SearchV1;
 use IanLessa\ProductSearch\V1\SearchService  as SearchServiceV1;
-use IanLessa\ProductSearch\V1\Aggregates\Sort  as SortV1;
 use PDO;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -63,9 +60,10 @@ final class Application
         $this->slimApp->get(
             '/v1/products', function (Request $request, Response $response, array $args) use ($application) {
                 $repository = $application->createProductRepository();
-                $search = $application->createSearchFromGet($request->getQueryParams());
 
                 $searchService = new SearchServiceV1($repository);
+
+                $search = $searchService->createSearchFromGet($request->getQueryParams());
                 $results = $searchService->searchProduct($search);
 
                 $resp = json_encode($results, JSON_PRETTY_PRINT);
@@ -75,48 +73,6 @@ final class Application
                 return $response;
             }
         );
-    }
-
-    public function createSearchFromGet($params) : SearchV1
-    {
-        try {
-            $filters = [];
-
-            $term = $params["q"] ?? null;
-
-            if ($term !== null) {
-                $filters['name'] = $term;
-            }
-
-            $filter = $params['filter'] ?? null;
-            if (preg_match('/.{1}:.{1}/', $filter) > 0) {
-                $filter = explode(':', $filter);
-                $filters[$filter[0]] = $filter[1];
-            }
-
-            $sort = null;
-            $baseSort = $params['sort'] ?? null;
-            if (preg_match('/.{1}:.{1}/', $baseSort) > 0) {
-                $baseSort = explode(':', $baseSort);
-                $method = $baseSort[0];
-                if (method_exists(SortV1::class, $method)) {
-                    $sort = SortV1::$method($baseSort[1]);
-                }
-            }
-
-            $pagination = new PaginationV1(
-                $params["start_page"] ?? null,
-                $params["per_page"] ?? null
-            );
-
-            return new SearchV1(
-                $filters,
-                $pagination,
-                $sort
-            );
-        }catch(\Throwable $e) {
-            return new SearchV1;
-        }
     }
 
     public function createProductRepository()

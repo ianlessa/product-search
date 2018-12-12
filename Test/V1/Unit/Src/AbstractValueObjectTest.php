@@ -6,7 +6,7 @@
  * Time: 20:30
  */
 
-namespace IanLessa\ProductSearch\Test\V1\Unit;
+namespace IanLessa\ProductSearch\Test\V1\Unit\Src;
 
 use \IanLessa\ProductSearch\V1\AbstractValueObject;
 use \IanLessa\ProductSearch\V1\Aggregates\Pagination;
