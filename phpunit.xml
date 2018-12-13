@@ -9,8 +9,11 @@
          beStrictAboutTodoAnnotatedTests="true"
          verbose="true"
 >
-    <testsuite name="Temp Test Suite Name">
-        <directory>Test/*</directory>
+    <testsuite name="V1_UnitTest">
+        <directory>Test/V1/Unit/*</directory>
+    </testsuite>
+    <testsuite name="V1_IntegrationTest">
+        <directory>Test/V1/Integration/*</directory>
     </testsuite>
 
     <php>
