@@ -10,7 +10,7 @@
 
 ***Front Page***
 
-![Front Page Screenshot](docs/images/FrontPage.png?raw=true "Front Page Screenshot")
+![Front Page Demo](docs/images/frontPageDemo.gif?raw=true "Front Page Screenshot")
 
 ---
 
