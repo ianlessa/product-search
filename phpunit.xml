@@ -9,12 +9,14 @@
          beStrictAboutTodoAnnotatedTests="true"
          verbose="true"
 >
-    <testsuite name="V1_UnitTest">
-        <directory>Test/V1/Unit/*</directory>
-    </testsuite>
-    <testsuite name="V1_IntegrationTest">
-        <directory>Test/V1/Integration/*</directory>
-    </testsuite>
+    <testsuites>
+        <testsuite name="V1_UnitTest">
+            <directory>Test/V1/Unit/*</directory>
+        </testsuite>
+        <testsuite name="V1_IntegrationTest">
+            <directory>Test/V1/Integration/*</directory>
+        </testsuite>
+    </testsuites>
 
     <php>
         <var name="DB_HOST" value="localhost" />
