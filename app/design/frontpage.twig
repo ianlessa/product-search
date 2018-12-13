@@ -15,7 +15,7 @@
 </head>
 <body>
     <div class="container-fluid ">
-        <div class="jumbotron mx-auto align-items-center" style="width: 95%">
+        <div class="jumbotron mx-auto align-items-center" style="width: 95%; padding: 1.5rem 2rem;" >
             <h1 class="text-center">Product Search</h1>
             <hr />
             <div class="row">
@@ -117,13 +117,13 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="row form-group">
-                        <label for="query-string-example">Query string</label>
+                        <h6>Query String</h6>
                         <textarea rows='3' class='col-sm-12' type="text" id='query-string-example' value="queryStringExample" disabled>
                         </textarea>
                     </div>
-                    <div class="row">
-                        <pre id="json-result">
-
+                    <div class="row" >
+                        <h6>Json Result</h6>
+                        <pre class="jumbotron" id="json-result" style="background:rgb(219, 219, 219); padding: 1rem 1rem;">
                         </pre>
                     </div>
                 </div>
