@@ -22,6 +22,10 @@
 - [API](#api)
     - [Default Search](#default-search)
     - [Search product By Name](#search-product-by-name)
+    - [Filter Search](#filter-search)
+    - [Paginated search](#paginated-search)
+    - [Sort Search](#sort-search)
+    - [Putting all together](#putting-all-together)
 - [Docker](#docker)
 - [Tests](#tests)
 - [License](#license)
@@ -90,63 +94,62 @@ You can do a live test of the features on my site [http://ianlessa.com](http://i
 ###### [▲ Table of Contents](#table-of-contents) 
 
 Currently, the API have just one endpoint that retrieves the product search results.
-Please notice that any misspelled or invalid params will be ignored, and querying with invalid values for parameters should result in a [default search](#default-search).
+Please notice that any misspelled or invalid params will be ignored, and querying with invalid values for parameters will result in a [default search](#default-search).
+Combining the params described in this section will result in a `AND` type in `WHERE` section of the SQL query.
 
 ##### Default Search 
 ###### [▲ API](#api) 
 `GET /v1/products` - Make a default product search.
  
-
 ##### Default Search - Response
-
 ```JSON
 {
-    "search": {
-      "filters": [
+ "search": {
+   "filters": [
 
-      ],
-      "pagination": {
-        "start": 0,
-        "perPage": 5
-      },
-      "sort": null
+    ],
+    "pagination": {
+      "start": 0,
+      "perPage": 5
     },
-    "rowCount": 5,
-    "maxRows": 17,
-    "results": [
-      {
-        "id": "1",
-        "name": "Flowered Dress",
-        "brand": "Sunflower",
-        "description": "A beautiful flowered dress perfect for a flowered person."
-      },
-      {
-        "id": "2",
-        "name": "Daisy Hat",
-        "brand": "Sunflower",
-        "description": "A cute daisy-shaped hat which is the latest trend in the garden!"
-      },
-      {
-        "id": "3",
-        "name": "Banana Pajama",
-        "brand": "Banana Boat",
-        "description": "A yellow pajama with brown ellipses on it."
-      },
-      {
-        "id": "4",
-        "name": "Banana shoes",
-        "brand": "Banana Boat",
-        "description": "A pair of shoes that makes you look a little bit out of the box."
-      },
-      {
-        "id": "5",
-        "name": "Banana Leaf Coat",
-        "brand": "Banana Boat",
-        "description": "A comfortable coat entirely made of banana leaves."
-      }
-    ]
-  }
+    "sort": null
+  },
+  "rowCount": 5,
+  "maxRows": 17,
+  "results": [
+    {
+      "id": "1",
+      "name": "Flowered Dress",
+      "brand": "Sunflower",
+      "description": "A beautiful flowered dress perfect for a flowered person."
+    },
+    {
+      "id": "2",
+      "name": "Daisy Hat",
+      "brand": "Sunflower",
+      "description": "A cute daisy-shaped hat which is the latest trend in the garden!"
+    },
+    {
+      "id": "3",
+      "name": "Banana Pajama",
+      "brand": "Banana Boat",
+      "description": "A yellow pajama with brown ellipses on it."
+    },
+    {
+      "id": "4",
+      "name": "Banana shoes",
+      "brand": "Banana Boat",
+      "description": "A pair of shoes that makes you look a little bit out of the box."
+    },
+    {
+      "id": "5",
+      "name": "Banana Leaf Coat",
+      "brand": "Banana Boat",
+      "description": "A comfortable coat entirely made of banana leaves."
+    }
+  ]
 }
+
 ```
 
 ##### Search product By Name 
@@ -154,7 +157,6 @@ Please notice that any misspelled or invalid params will be ignored, and queryin
 `GET /v1/products?q=shoe` - Find a product by its name. A `LIKE` type query will be made.
 
 ##### Search product By Name - Response
-
 ```JSON
 {
   "search": {
@@ -191,6 +193,142 @@ Please notice that any misspelled or invalid params will be ignored, and queryin
   ]
 }
 ```
+
+##### Filter Search
+###### [▲ API](#api) 
+`GET /v1/products?filter=brand:primark` - Filter the search by a product attribute. A `LIKE` type query will be made.
+Valid attributes are:
+- id 
+- name
+- brand
+- description
+
+##### Filter Search - Response
+```JSON
+{
+  "search": {
+    "filters": {
+      "brand": "primark"
+    },
+    "pagination": {
+      "start": 0,
+      "perPage": 5
+    },
+    "sort": null
+  },
+  "rowCount": 4,
+  "maxRows": 4,
+  "results": [
+    {
+      "id": "10",
+      "name": "New Year's Eve Dress",
+      "brand": "Primark",
+      "description": "A white dress that helps your dreams come true in the next year."
+    },
+    {
+      "id": "11",
+      "name": "Black Jeans",
+      "brand": "Primark",
+      "description": "An all purpose casual pair of jeans."
+    },
+    {
+      "id": "12",
+      "name": "Black Shoes",
+      "brand": "Primark",
+      "description": "A classic pair of shoes that matches with your lifestyle."
+    },
+    {
+      "id": "13",
+      "name": "Black Sneakers",
+      "brand": "Primark",
+      "description": "For youngsters of all ages."
+    }
+  ]
+}
+```
+
+##### Paginated search
+###### [▲ API](#api) 
+`GET /v1/products?per_page=2&start_page=2` - Set the search pagination. 
+
+The valid values for these params are:
+- per_page: Positive numbers bigger than 0.
+- start_page: Positive numbers including 0.
+
+Any invalid value in those params will result in a [default search](#default-search)
+
+##### Paginated search - Response
+```JSON
+{
+  "search": {
+    "filters": [
+      
+    ],
+    "pagination": {
+      "start": 2,
+      "perPage": 2
+    },
+    "sort": null
+  },
+  "rowCount": 2,
+  "maxRows": 17,
+  "results": [
+    {
+      "id": "5",
+      "name": "Banana Leaf Coat",
+      "brand": "Banana Boat",
+      "description": "A comfortable coat entirely made of banana leaves."
+    },
+    {
+      "id": "6",
+      "name": "Aviator Sunglasses",
+      "brand": "Tropical Wear",
+      "description": "If you want to fly away, make sure to have one of these."
+    }
+  ]
+}
+```
+
+##### Sort Search
+###### [▲ API](#api) 
+`GET /v1/products?filter=brand:primark` - Filter the search by a product attribute. A `LIKE` type query will be made.
+
+Valid attributes are:
+- id 
+- name
+- brand
+- description
+
+##### Paginated search - Response
+```JSON
+```
+
+##### Sort Search
+###### [▲ API](#api) 
+`GET /v1/products?per_page=2&start_page=2` - Set the search pagination. 
+
+The valid values for these params are:
+- per_page: Positive numbers bigger than 0.
+- start_page: Positive numbers including 0.
+
+Any invalid value in those params will result in a [default search](#default-search)
+
+##### Paginated search - Response
+```JSON
+```
+
+##### Putting all together
+###### [▲ API](#api) 
+`GET /v1/products?filter=brand:primark` - Filter the search by a product attribute. A `LIKE` type query will be made.
+Valid attributes are:
+- id 
+- name
+- brand
+- description
+
+##### Putting all together - Response
+```JSON
+``` 
 
 ## Docker
 ###### [▲ Table of Contents](#table-of-contents) 
