@@ -18,9 +18,9 @@
 
 - [Installation](#installatton)
 - [Features](#features)
+- [API](#api)
 - [Docker](#docker)
 - [Tests](#tests)
-- [API](#api)
 - [License](#license)
 
 ---
@@ -67,6 +67,19 @@ All the SQL required to create the table and populate it is shipped with this re
 Before that, you are ready to test the system.
 
 ## Features
+
+This API provides the following features:
+- Search Product By Name
+- Filter Search By the product attributes:
+    - Id
+    - Brand
+    - Description
+- Pagination
+- Sorting
+
+You can do a live test of the features, on my site [ianlessa.com](http://ianlessa.com). There you can see the query sended to the API and the results that it retrieves.
+
+## API
 
 @todo
 
