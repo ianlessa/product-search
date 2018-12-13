@@ -154,7 +154,7 @@ ProductSearchPageController.prototype.updateForm = function(form)
 ProductSearchPageController.prototype.queryApi = function (form, url) {
     var _controller = this;
 
-    form.queryString.val(url);
+    form.queryString.val('/' + url);
 
     form.loadModal.show();
     $.ajax({
