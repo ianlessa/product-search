@@ -30,6 +30,15 @@ INSERT INTO product_search.product (name, brand, description) VALUES
 ('Moon Dress', 'Eastern Lands', 'A white dress, printed with rabbits making rice balls.')
 ;
 
+CREATE TABLE IF NOT EXISTS product_search_test.product
+(
+  id          INT AUTO_INCREMENT
+  PRIMARY KEY,
+  name        VARCHAR(45) NOT NULL,
+  brand       VARCHAR(25) NOT NULL,
+  description TEXT        NOT NULL
+);
+
 INSERT INTO product_search_test.product (name, brand, description) VALUES
 ('Flowered Dress', 'Sunflower', 'A beautiful flowered dress perfect for a flowered person.'),
 ('Daisy Hat', 'Sunflower', 'A cute daisy-shaped hat which is the latest trend in the garden!'),
