@@ -411,6 +411,8 @@ $ docker run -d -it -p 80:80 --name desired_container_name ianlessa/product-sear
 
 When you run the `docker run` command you should wait few minutes while all the require services are started. After that you can access the system in your browser.
 
+The project files are located on the `/app` directory of the container.
+
 ## Tests
 ###### [▲ Table of Contents](#table-of-contents) 
 
