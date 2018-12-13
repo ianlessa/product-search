@@ -28,6 +28,8 @@
     - [Putting all together](#putting-all-together)
 - [Docker](#docker)
 - [Tests](#tests)
+    - [Integration Tests](#integration-tests)
+    - [Unit Tests](#unit-tests)
 - [License](#license)
 
 ---
@@ -357,7 +359,9 @@ Valid values are the same of an [filter search](#filter-search):
 
 #### Putting all together
 ###### [▲ API](#api) 
-`GET /v1/products?q=coat&filter=brand:primark&sort=desc:id&per_page=1&start_page=1` - All the parameters described above can be combined.
+`GET /v1/products?q=coat&filter=brand:primark&sort=desc:id&per_page=1&start_page=1` - Make a complex search.
+
+All the parameters described above can be combined.
 
 ##### Putting all together - Response
 ```JSON
@@ -392,7 +396,7 @@ Valid values are the same of an [filter search](#filter-search):
 ## Docker
 ###### [▲ Table of Contents](#table-of-contents) 
 
-A [`Dockerfile`](Dockerfile) is provided with this repo. You can use it to build a Docker container with all the services and configuration needed to run the API and its interface. To do so, please follow the steps:
+A [`Dockerfile`](Dockerfile) is provided with this repo. You can use it to build a Docker container with all the services and configuration needed to run the API and its user interface. To do so, please follow the steps:
 
 - In the clone dir of the repo, execute this commands
 ```shell
@@ -400,17 +404,65 @@ $ docker build docker build -t desired/image-name .
 $ docker run -d -it -p 80:80 --name desired_container_name desired/image-name
 ```
 
-You should wait few minutes while the all the require services are started. After that you can access the system in your browser.
-
-If you don't want to build the Docker image by yourself, you can just grab it form my DockerHub repository, by using the following command:
+- If you don't want to build the Docker image by yourself, you can just grab it form my [Docker Hub repository](https://hub.docker.com/r/ianlessa/product-search/) of this project, by using the following command:
 ```shell
 $ docker run -d -it -p 80:80 --name desired_container_name ianlessa/product-search
 ```
 
+When you run the `docker run` command you should wait few minutes while all the require services are started. After that you can access the system in your browser.
+
 ## Tests
 ###### [▲ Table of Contents](#table-of-contents) 
 
-@todo
+This repo have `Unit` and `Integration` tests, made with `PHPUnit`. The tests are under [Test](Test) folder. Each type of test have its on folder, and the directory structure
+were made to reflect the actual source code directory structure, to ease the finding of the test and its tested class.
+Before you run the tests, please refer to the [Integration Tests](#integration-tests) section. There are some configs that should be made in order to test correctly.
+
+There are two test suites configured. To run both, just type the following command in the project root dir: 
+```shell
+$ vendor/bin/phpunit
+```
+
+You can run the tests inside the [docker container](#docker) of this project as well.
+
+#### Integration Tests
+###### [▲ Tests](#Tests) 
+
+Since the integration tests perform operations in the database you should configure the access to it  
+in the same way as described on the [Database Settings](#database-settings) section. However, the configurations
+must be made at the [phpunit.xml](phpunit.xml) file, located on the project root. The `<php>` section of the xml
+follows the same principle of the [config.json](app/config/config.json) file: 
+
+```xml
+<php>
+    <var name="DB_HOST" value="localhost" />
+    <var name="DB_PORT" value="3306" />
+    <var name="DB_DATABASE" value="product_search_test" />
+    <var name="DB_USERNAME" value="root" />
+    <var name="DB_PASSWORD" value="root" />
+</php>
+```
+
+To populate the product table of the product_search_test database, 
+you must use the insert statement of the [database_up.sql](database_up.sql) file, 
+as the tests are made based on these data.
+
+##### Running Integration tests
+
+To run the Integration Test suite, just execute this command on project root:
+
+```shell
+$ vendor/bin/phpunit --testsuite V1_IntegrationTest
+``` 
+
+#### Unit Tests
+###### [▲ Tests](#Tests) 
+
+The Unit tests require no further configuration. To run the Unit Test suite, just run the following command:
+
+```shell
+$ vendor/bin/phpunit --testsuite V1_UnitTest
+``` 
 
 ## License
 ###### [▲ Table of Contents](#table-of-contents) 
