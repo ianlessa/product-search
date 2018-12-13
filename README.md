@@ -1,6 +1,6 @@
 # Product Search Api
 
-> A Simple product search RESTful API with an user interface to test it!
+> A Simple Product Search RESTful API with an user interface to test it!
 
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 [![Build Status](https://travis-ci.com/ianlessa/ecf-experiments.svg?branch=master)](https://travis-ci.com/ianlessa/ecf-experiments) [![Tested on PHP 5.6 to nightly](https://img.shields.io/badge/tested%20on-PHP%205.6%20|%207.0%20|%207.1%20|%207.2%20|%20hhvm%20|%20nightly-brightgreen.svg?maxAge=2419200)](https://travis-ci.com/ianlessa/ecf-experiments)
@@ -17,6 +17,7 @@
 ## Table of Contents
 
 - [Installation](#installatton)
+    - [Database Settings](#database-settings)
 - [Features](#features)
 - [API](#api)
     - [Default Search](#default-search)
@@ -48,7 +49,7 @@ Before that, configure your server to point correctly to the directory of the re
 ### Database Settings
 ###### [▲ Table of Contents](#table-of-contents) 
 
-The database config file is a JSON file inside the `/app/config/` directory. The default contents are:
+The database [config](app/config/config.json) file is a JSON file inside the `/app/config/` directory. The default contents are:
 
 ```JSON
 {
@@ -66,7 +67,7 @@ After the database configuration, you must create the required databases and pop
 
 ![Product Table Schema](docs/images/productTable.png?raw=true "Product Table Schema")
 
-All the SQL required to create the table and populate it is shipped with this repo, in the file `database_up.sql`.
+All the SQL required to create the table and populate it is shipped with this repo, in the file [`database_up.sql`](database_up.sql).
 
 Before that, you are ready to test the system.
 
@@ -89,9 +90,12 @@ You can do a live test of the features on my site [http://ianlessa.com](http://i
 ###### [▲ Table of Contents](#table-of-contents) 
 
 Currently, the API have just one endpoint that retrieves the product search results.
+Please notice that any misspelled or invalid params will be ignored, and querying with invalid values for parameters should result in a [default search](#default-search).
 
 ##### Default Search 
+###### [▲ API](#api) 
 `GET /v1/products` - Make a default product search.
+ 
 
 ##### Default Search - Response
 
