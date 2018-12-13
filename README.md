@@ -19,6 +19,7 @@
 - [Installation](#installatton)
 - [Features](#features)
 - [API](#api)
+    - [Default Search](#default-search)
 - [Docker](#docker)
 - [Tests](#tests)
 - [License](#license)
@@ -77,11 +78,68 @@ This API provides the following features:
 - Pagination
 - Sorting
 
-You can do a live test of the features, on my site [ianlessa.com](http://ianlessa.com). There you can see the query sended to the API and the results that it retrieves.
+To access the Product Search screen, just head to the webpage root directory on your browser. 
+You can do a live test of the features on my site [http://ianlessa.com](http://ianlessa.com) as well. There you can see the query sended to the API and the results that it retrieves.
 
 ## API
+###### RTL [Head to Table of contents](#table-of-contents) 
 
-@todo
+Currently, the API have just one endpoint that retrieves the product search results.
+
+##### Default Search 
+`GET /v1/products` - Make a default product search.
+
+##### Default Search - Response
+
+```JSON
+{
+    "search": {
+      "filters": [
+
+      ],
+      "pagination": {
+        "start": 0,
+        "perPage": 5
+      },
+      "sort": null
+    },
+    "rowCount": 5,
+    "maxRows": 17,
+    "results": [
+      {
+        "id": "1",
+        "name": "Flowered Dress",
+        "brand": "Sunflower",
+        "description": "A beautiful flowered dress perfect for a flowered person."
+      },
+      {
+        "id": "2",
+        "name": "Daisy Hat",
+        "brand": "Sunflower",
+        "description": "A cute daisy-shaped hat which is the latest trend in the garden!"
+      },
+      {
+        "id": "3",
+        "name": "Banana Pajama",
+        "brand": "Banana Boat",
+        "description": "A yellow pajama with brown ellipses on it."
+      },
+      {
+        "id": "4",
+        "name": "Banana shoes",
+        "brand": "Banana Boat",
+        "description": "A pair of shoes that makes you look a little bit out of the box."
+      },
+      {
+        "id": "5",
+        "name": "Banana Leaf Coat",
+        "brand": "Banana Boat",
+        "description": "A comfortable coat entirely made of banana leaves."
+      }
+    ]
+  }
+}
+```
 
 ## Docker
 
