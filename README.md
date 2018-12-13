@@ -252,10 +252,11 @@ Valid attributes are:
 `GET /v1/products?per_page=2&start_page=2` - Set the search pagination. 
 
 The valid values for these params are:
-- per_page: Positive numbers bigger than 0.
-- start_page: Positive numbers including 0.
+- start_page: Positive numbers including 0. Default value is 0.
+- per_page: Positive numbers bigger than 0. Default value is 5.
 
-Any invalid value in those params will result in a [default search](#default-search)
+Any invalid value in those params will result in a [default search](#default-search).
+Omitting any of the parameters will result in the default values for them.
 
 ##### Paginated search - Response
 ```JSON
@@ -391,7 +392,20 @@ Valid values are the same of an [filter search](#filter-search):
 ## Docker
 ###### [▲ Table of Contents](#table-of-contents) 
 
-@todo
+A [`Dockerfile`](Dockerfile) is provided with this repo. You can use it to build a Docker container with all the services and configuration needed to run the API and its interface. To do so, please follow the steps:
+
+- In the clone dir of the repo, execute this commands
+```shell
+$ docker build docker build -t desired/image-name .
+$ docker run -d -it -p 80:80 --name desired_container_name desired/image-name
+```
+
+You should wait few minutes while the all the require services are started. After that you can access the system in your browser.
+
+If you don't want to build the Docker image by yourself, you can just grab it form my DockerHub repository, by using the following command:
+```shell
+$ docker run -d -it -p 80:80 --name desired_container_name ianlessa/product-search
+```
 
 ## Tests
 ###### [▲ Table of Contents](#table-of-contents) 
