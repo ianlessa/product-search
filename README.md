@@ -20,6 +20,7 @@
 - [Features](#features)
 - [API](#api)
     - [Default Search](#default-search)
+    - [Search product By Name](#search-product-by-name)
 - [Docker](#docker)
 - [Tests](#tests)
 - [License](#license)
@@ -141,6 +142,49 @@ Currently, the API have just one endpoint that retrieves the product search resu
       }
     ]
   }
+}
+```
+
+##### Search product By Name 
+###### [▲ API](#api) 
+`GET /v1/products?q=shoe` - Find a product by its name. A `LIKE` type query will be made.
+
+##### Search product By Name - Response
+
+```JSON
+{
+  "search": {
+    "filters": {
+      "name": "shoe"
+    },
+    "pagination": {
+      "start": 0,
+      "perPage": 5
+    },
+    "sort": null
+  },
+  "rowCount": 3,
+  "maxRows": 3,
+  "results": [
+    {
+      "id": "4",
+      "name": "Banana shoes",
+      "brand": "Banana Boat",
+      "description": "A pair of shoes that makes you look a little bit out of the box."
+    },
+    {
+      "id": "7",
+      "name": "Beach Shoes",
+      "brand": "Tropical Wear",
+      "description": "A pair of shoes to use on beach. They are fresh and maintain your feet free of sweat."
+    },
+    {
+      "id": "12",
+      "name": "Black Shoes",
+      "brand": "Primark",
+      "description": "A classic pair of shoes that matches with your lifestyle."
+    }
+  ]
 }
 ```
 
