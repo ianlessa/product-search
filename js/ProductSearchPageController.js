@@ -90,6 +90,7 @@ ProductSearchPageController.prototype.loadForm = function()
     form.lastQuery = '';
     form.currentPage = 0;
     form.maxPages = 0;
+    form.loadModal = $('#load-modal');
 
     return form;
 };
@@ -155,9 +156,12 @@ ProductSearchPageController.prototype.queryApi = function (form, url) {
 
     form.queryString.val(url);
 
+    form.loadModal.show();
     $.ajax({
         url
     }).done(function(data){
+
+        form.loadModal.hide();
 
         var results = '';
         try {
