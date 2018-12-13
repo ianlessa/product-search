@@ -27,6 +27,7 @@
 ---
 
 ## Installation
+###### [▲ Table of Contents](#table-of-contents) 
 
 This system depends on PHP 7.1, Apache (with mod_rewrite enabled) and MySQL to run. Make sure to install the environment dependencies before proceed to the repository installation.
 
@@ -44,6 +45,7 @@ $ composer install -vvv
 Before that, configure your server to point correctly to the directory of the repo. After that, proceed to the database settings.
 
 ### Database Settings
+###### [▲ Table of Contents](#table-of-contents) 
 
 The database config file is a JSON file inside the `/app/config/` directory. The default contents are:
 
@@ -68,6 +70,7 @@ All the SQL required to create the table and populate it is shipped with this re
 Before that, you are ready to test the system.
 
 ## Features
+###### [▲ Table of Contents](#table-of-contents) 
 
 This API provides the following features:
 - Search Product By Name
@@ -82,7 +85,7 @@ To access the Product Search screen, just head to the webpage root directory on 
 You can do a live test of the features on my site [http://ianlessa.com](http://ianlessa.com) as well. There you can see the query sended to the API and the results that it retrieves.
 
 ## API
-###### RTL [Head to Table of contents](#table-of-contents) 
+###### [▲ Table of Contents](#table-of-contents) 
 
 Currently, the API have just one endpoint that retrieves the product search results.
 
@@ -142,14 +145,17 @@ Currently, the API have just one endpoint that retrieves the product search resu
 ```
 
 ## Docker
+###### [▲ Table of Contents](#table-of-contents) 
 
 @todo
 
 ## Tests
+###### [▲ Table of Contents](#table-of-contents) 
 
 @todo
 
 ## License
+###### [▲ Table of Contents](#table-of-contents) 
 
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
