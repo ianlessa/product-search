@@ -97,7 +97,7 @@ Currently, the API have just one endpoint that retrieves the product search resu
 Please notice that any misspelled or invalid params will be ignored, and querying with invalid values for parameters will result in a [default search](#default-search).
 Combining the params described in this section will result in a `AND` type in `WHERE` section of the SQL query.
 
-##### Default Search 
+#### Default Search 
 ###### [▲ API](#api) 
 `GET /v1/products` - Make a default product search.
  
@@ -152,7 +152,7 @@ Combining the params described in this section will result in a `AND` type in `W
 
 ```
 
-##### Search product By Name 
+#### Search product By Name 
 ###### [▲ API](#api) 
 `GET /v1/products?q=shoe` - Find a product by its name. A `LIKE` type query will be made.
 
@@ -194,7 +194,7 @@ Combining the params described in this section will result in a `AND` type in `W
 }
 ```
 
-##### Filter Search
+#### Filter Search
 ###### [▲ API](#api) 
 `GET /v1/products?filter=brand:primark` - Filter the search by a product attribute. A `LIKE` type query will be made.
 Valid attributes are:
@@ -247,7 +247,7 @@ Valid attributes are:
 }
 ```
 
-##### Paginated search
+#### Paginated search
 ###### [▲ API](#api) 
 `GET /v1/products?per_page=2&start_page=2` - Set the search pagination. 
 
@@ -289,45 +289,103 @@ Any invalid value in those params will result in a [default search](#default-sea
 }
 ```
 
-##### Sort Search
+#### Sort Search
 ###### [▲ API](#api) 
-`GET /v1/products?filter=brand:primark` - Filter the search by a product attribute. A `LIKE` type query will be made.
+`GET /v1/products?sort=desc:description` - Sort search by a product attribute.
 
-Valid attributes are:
+Valid sort types are `asc` and `desc`, which will sort the results in a ascending and descending order, respectively.
+
+Valid values are the same of an [filter search](#filter-search):
 - id 
 - name
 - brand
 - description
 
-##### Paginated search - Response
+##### Sort Search - Response
 ```JSON
+{
+  "search": {
+    "filters": [
+      
+    ],
+    "pagination": {
+      "start": 0,
+      "perPage": 5
+    },
+    "sort": {
+      "value": "description",
+      "type": "DESC"
+    }
+  },
+  "rowCount": 5,
+  "maxRows": 17,
+  "results": [
+    {
+      "id": "9",
+      "name": "Clover Glasses",
+      "brand": "Sunflower",
+      "description": "Put some luck in your life with the brand new product of our eyewear collection!"
+    },
+    {
+      "id": "6",
+      "name": "Aviator Sunglasses",
+      "brand": "Tropical Wear",
+      "description": "If you want to fly away, make sure to have one of these."
+    },
+    {
+      "id": "8",
+      "name": "Beach Coat",
+      "brand": "Tropical Wear",
+      "description": "If you think that bikinis are too revealing, this product is perfect for you!"
+    },
+    {
+      "id": "13",
+      "name": "Black Sneakers",
+      "brand": "Primark",
+      "description": "For youngsters of all ages."
+    },
+    {
+      "id": "11",
+      "name": "Black Jeans",
+      "brand": "Primark",
+      "description": "An all purpose casual pair of jeans."
+    }
+  ]
+}
 ```
 
-##### Sort Search
+#### Putting all together
 ###### [▲ API](#api) 
-`GET /v1/products?per_page=2&start_page=2` - Set the search pagination. 
-
-The valid values for these params are:
-- per_page: Positive numbers bigger than 0.
-- start_page: Positive numbers including 0.
-
-Any invalid value in those params will result in a [default search](#default-search)
-
-##### Paginated search - Response
-```JSON
-```
-
-##### Putting all together
-###### [▲ API](#api) 
-`GET /v1/products?filter=brand:primark` - Filter the search by a product attribute. A `LIKE` type query will be made.
-Valid attributes are:
-- id 
-- name
-- brand
-- description
+`GET /v1/products?q=coat&filter=brand:primark&sort=desc:id&per_page=1&start_page=1` - All the parameters described above can be combined.
 
 ##### Putting all together - Response
 ```JSON
+{
+  "search": {
+    "filters": {
+      "name": "coat",
+      "brand": "primark"
+    },
+    "pagination": {
+      "start": 1,
+      "perPage": 1
+    },
+    "sort": {
+      "value": "id",
+      "type": "DESC"
+    }
+  },
+  "rowCount": 1,
+  "maxRows": 2,
+  "results": [
+    {
+      "id": "19",
+      "name": "Warm Coat",
+      "brand": "Primark",
+      "description": "Helps you pass through the most intense winter!"
+    }
+  ]
+}
 ``` 
 
 ## Docker
