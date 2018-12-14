@@ -3,10 +3,8 @@
 > A Simple Product Search RESTful API with an user interface to test it!
 
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
-[![Build Status](https://travis-ci.com/ianlessa/ecf-experiments.svg?branch=master)](https://travis-ci.com/ianlessa/ecf-experiments) [![Tested on PHP 5.6 to nightly](https://img.shields.io/badge/tested%20on-PHP%205.6%20|%207.0%20|%207.1%20|%207.2%20|%20hhvm%20|%20nightly-brightgreen.svg?maxAge=2419200)](https://travis-ci.com/ianlessa/ecf-experiments)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f98c894a10374db886c87ecb653c92bd)](https://www.codacy.com/app/ian.lessa/ecf-experiments?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ianlessa/ecf-experiments&amp;utm_campaign=Badge_Grade)
-[![Maintainability](https://api.codeclimate.com/v1/badges/199f4b77170b54cb7e58/maintainability)](https://codeclimate.com/github/ianlessa/ecf-experiments/maintainability) 
-[![Test Coverage](https://api.codeclimate.com/v1/badges/199f4b77170b54cb7e58/test_coverage)](https://codeclimate.com/github/ianlessa/ecf-experiments/test_coverage) 
+[![Build Status](https://travis-ci.com/ianlessa/product-search.svg?branch=master)](https://travis-ci.com/ianlessa/product-search) [![Tested on PHP 7.1 to 7.3](https://img.shields.io/badge/tested%20on-PHP%207.1%20|%207.2%20|%207.3-brightgreen.svg?maxAge=2419200)](https://travis-ci.com/ianlessa/product-search)
+[![Maintainability](https://api.codeclimate.com/v1/badges/0c2d6b68b80bf1fafd4b/maintainability)](https://codeclimate.com/github/ianlessa/product-search/maintainability)
 
 ***Front Page***
 
