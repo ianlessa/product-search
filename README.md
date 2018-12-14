@@ -15,7 +15,7 @@
 ## Table of Contents
 
 - [Installation](#installatton)
-    - [Database Settings](#database-settings)
+    - [About Database](#about-database)
 - [Features](#features)
 - [API](#api)
     - [Default Search](#default-search)
@@ -24,7 +24,6 @@
     - [Paginated search](#paginated-search)
     - [Sort Search](#sort-search)
     - [Putting all together](#putting-all-together)
-- [Docker](#docker)
 - [Tests](#tests)
     - [Integration Tests](#integration-tests)
     - [Unit Tests](#unit-tests)
@@ -35,22 +34,16 @@
 ## Installation
 ###### [▲ Table of Contents](#table-of-contents) 
 
-This system depends on PHP 7.1, Apache (with mod_rewrite enabled) and MySQL to run. Make sure to install the environment dependencies before proceed to the repository installation.
-
-- Clone this repo to your local machine using `https://github.com/ianlessa/product-search`, inside your preferred dir:
-
+If you don't want to build the Docker image by yourself (by using the [`Dockerfile`](Dockerfile) shipped in this repo), you can just grab it form my [Docker Hub repository](https://hub.docker.com/r/ianlessa/product-search/) of this project, by using the following command:
 ```shell
-$ git clone https://github.com/ianlessa/product-search.git
-```
-- Inside the folder that you have just cloned the repo, you'll need to install the project dependencies:
-
-```shell
-$ composer install -vvv
+$ docker run -d -it -p 80:80 --name desired_container_name ianlessa/product-search
 ```
 
-Then, configure your server to point correctly to the directory of the repo. After that, proceed to the database settings.
+This Docker container provides all the services and configuration needed to run the API and its user interface. When you run the `docker run` command you should wait few minutes while all the require services are started. After that you can access the system in your browser.
 
-### Database Settings
+The project files are located on the `/app` directory of the container.
+
+### About database
 ###### [▲ Table of Contents](#table-of-contents) 
 
 The database [config](app/config/config.json) file is a JSON file inside the `/app/config/` directory. The default contents are:
@@ -65,7 +58,7 @@ The database [config](app/config/config.json) file is a JSON file inside the `/a
 }
 ```
 
-Just configure it to your settings. Omitting any of the params described in the JSON file will set it to its the default value.
+If you need, just configure it to your settings. Omitting any of the params described in the JSON file will set it to its the default value.
 
 After the database configuration, you must create the required databases and populate it with product data. The table schema follows the image: 
 
@@ -391,26 +384,6 @@ All the parameters described above can be combined.
 }
 ``` 
 
-## Docker
-###### [▲ Table of Contents](#table-of-contents) 
-
-A [`Dockerfile`](Dockerfile) is provided with this repo. You can use it to build a Docker container with all the services and configuration needed to run the API and its user interface. To do so, please follow the steps:
-
-- In the clone dir of the repo, execute this commands
-```shell
-$ docker build docker build -t desired/image-name .
-$ docker run -d -it -p 80:80 --name desired_container_name desired/image-name
-```
-
-- If you don't want to build the Docker image by yourself, you can just grab it form my [Docker Hub repository](https://hub.docker.com/r/ianlessa/product-search/) of this project, by using the following command:
-```shell
-$ docker run -d -it -p 80:80 --name desired_container_name ianlessa/product-search
-```
-
-When you run the `docker run` command you should wait few minutes while all the require services are started. After that you can access the system in your browser.
-
-The project files are located on the `/app` directory of the container.
-
 ## Tests
 ###### [▲ Table of Contents](#table-of-contents) 
 
@@ -423,13 +396,13 @@ There are two test suites configured. To run both, just type the following comma
 $ vendor/bin/phpunit
 ```
 
-You can run the tests inside the [docker container](#docker) of this project as well.
+You can run the tests inside the [docker container](#installation) of this project as well.
 
 #### Integration Tests
 ###### [▲ Tests](#Tests) 
 
 Since the integration tests performs operations in the database you should configure the access to it  
-in the same way as described on the [Database Settings](#database-settings) section. However, the configurations
+in the same way as described on the [About Database](#about-database) section. However, the configurations
 must be made at the [phpunit.xml](phpunit.xml) file, located on the project root. The `<php>` section of the xml
 follows the same principle of the [config.json](app/config/config.json) file: 
 
