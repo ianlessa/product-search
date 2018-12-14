@@ -4,22 +4,39 @@ namespace IanLessa\ProductSearch\V1\Aggregates;
 
 use IanLessa\ProductSearch\V1\AbstractValueObject;
 
+/**
+ * Sort Value Object. Holds the attributes related to the sort and the business
+ * rules related to them.
+ *
+ * All the setters are private in order to respect the invariability of
+ * a Value Object.
+ *
+ * @package IanLessa\ProductSearch\V1\Aggregates
+ */
 class Sort extends AbstractValueObject
 {
+    /**
+     * @const Defines the constant to the Ascending sort type
+     */
     const TYPE_ASC = 'ASC';
+    /**
+     * @const Defines the constant to the Descending sort type
+     */
     const TYPE_DESC = 'DESC';
 
     /**
-     * @var string 
+     * @var string The type of the sort.
      */
     private $type;
     /**
-     * @var string 
+     * @var string The entity attribute that the search will be sort by.
      */
     private $value;
 
     /**
      * Sort constructor.
+     * Since there are specific types of sort, the only way to instantiate this
+     * class is by using the static methods provided.
      *
      * @param string $type
      * @param string $value
@@ -30,12 +47,24 @@ class Sort extends AbstractValueObject
         $this->setValue($value);
     }
 
-    static public function asc($value)
+    /**
+     * Instantiates an Ascending type Sort object.
+     *
+     * @param  string $value The entity attribute to sort by.
+     * @return Sort
+     */
+    static public function asc(string $value)
     {
         return new self(self::TYPE_ASC, $value);
     }
 
-    static public function desc($value)
+    /**
+     * Instantiates a Descending type Sort object.
+     *
+     * @param  string $value The entity attribute to sort by.
+     * @return Sort
+     */
+    static public function desc(string $value)
     {
         return new self(self::TYPE_DESC, $value);
     }
@@ -77,6 +106,8 @@ class Sort extends AbstractValueObject
     }
 
     /**
+     * Do the structural comparison with another Value Object.
+     *
      * @param  Sort $object
      * @return bool
      */

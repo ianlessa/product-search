@@ -4,6 +4,11 @@ namespace IanLessa\ProductSearch\V1\Aggregates;
 
 use IanLessa\ProductSearch\V1\AbstractEntity;
 
+/**
+ * The product entity.
+ *
+ * @package IanLessa\ProductSearch\V1\Aggregates
+ */
 class Product extends AbstractEntity
 {
     /**

@@ -2,19 +2,32 @@
 
 namespace IanLessa\ProductSearch\V1\Aggregates;
 
+/**
+ * Search Aggregate.
+ * Holds the required information to do an search and the invariants related to
+ * them.
+ *
+ * @package IanLessa\ProductSearch\V1\Aggregates
+ */
 final class Search implements \JsonSerializable
 {
     /**
+     * Holds an array of filters where the keys are the entity params that will be
+     * filtered and the values are the terms to filter by. Example:
+     * ["name" => "product_name"]
+     * ["brand" => "product_brand"]
+     *
      * @var array
      */
     private $filters;
+
     /**
-     * @var Pagination
+     * @var Pagination The pagination object that will be used on the search.
      */
     private $pagination;
 
     /**
-     * @var Sort 
+     * @var Sort  The sort object that will be used on the search.
      */
     private $sort;
 
@@ -36,7 +49,7 @@ final class Search implements \JsonSerializable
     }
 
     /**
-     * @return array
+     * @return array If there are no filters defined, it will return an empty array.
      */
     public function getFilters(): array
     {
@@ -62,8 +75,12 @@ final class Search implements \JsonSerializable
     }
 
     /**
-     * @param  Pagination $pagination
+     * The pagination setter. If the value passed is null, the default pagination
+     * will be attributed to the parameter.
+     *
+     * @param  null|Pagination $pagination
      * @return Search
+     * @throws \IanLessa\ProductSearch\V1\Exceptions\InvalidParamException
      */
     public function setPagination(?Pagination $pagination): Search
     {

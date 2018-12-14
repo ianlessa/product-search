@@ -4,19 +4,25 @@ namespace IanLessa\ProductSearch\V1\Aggregates;
 
 use JsonSerializable;
 
+/**
+ * SearchResult Aggregate. Holds the Search Object that was used in the search,
+ * its results and the number of the found rows.
+ *
+ * @package IanLessa\ProductSearch\V1\Aggregates
+ */
 class SearchResult implements JsonSerializable
 {
     /**
-     * @var Search
+     * @var Search The search object that was used in the search.
      */
     private $search;
     /**
-     * @var array
+     * @var array Contains the entities found on the search.
      */
     private $results;
 
     /**
-     * @var int
+     * @var int The number of rows found in the search.
      */
     private $maxRows;
 
@@ -24,7 +30,8 @@ class SearchResult implements JsonSerializable
      * SearchResult constructor.
      *
      * @param Search $search
-     * @param array  $results
+     * @param int $maxRows
+     * @param array $results
      */
     public function __construct(Search $search, int $maxRows, array $results)
     {
@@ -70,6 +77,9 @@ class SearchResult implements JsonSerializable
     }
 
     /**
+     * Return the number of entities retrieved by this search, considering the
+     * Pagination.
+     *
      * @return int
      */
     public function getRowCount(): int

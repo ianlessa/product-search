@@ -5,9 +5,22 @@ namespace IanLessa\ProductSearch\V1\Aggregates;
 use IanLessa\ProductSearch\V1\AbstractValueObject;
 use IanLessa\ProductSearch\V1\Exceptions\InvalidParamException;
 
+/**
+ * The Pagination Value Object.
+ * All the setters are private in order to respect the invariability of
+ * a Value Object.
+ *
+ * @package IanLessa\ProductSearch\V1\Aggregates
+ */
 class Pagination extends AbstractValueObject
 {
+    /**
+     * @const int Default value for the pagination start page.
+     */
     const DEFAULT_START = 0;
+    /**
+     * @const int Default value for the pagination results per page.
+     */
     const DEFAULT_PERPAGE = 5;
 
     /**
@@ -19,12 +32,28 @@ class Pagination extends AbstractValueObject
      */
     private $perPage;
 
-    public function __construct($start, $perPage)
+    /**
+     * Pagination constructor.
+     *
+     * Omitting any of the parameters make it be set to the default value defined
+     * by the constants.
+     *
+     * @param  ?int $start
+     * @param  ?int $perPage
+     * @throws InvalidParamException
+     */
+    public function __construct($start = null, $perPage = null)
     {
         $this->setStart($start ?? self::DEFAULT_START);
         $this->setPerPage($perPage ?? self::DEFAULT_PERPAGE);
     }
 
+    /**
+     * Creates an Pagination object with the default settings.
+     *
+     * @return Pagination
+     * @throws InvalidParamException
+     */
     static public function default()
     {
         return new self(
@@ -41,9 +70,14 @@ class Pagination extends AbstractValueObject
         return $this->start;
     }
 
+
     /**
+     * Pagination Start Setter.
+     * Holds the business rule related to the start property.
+     *
      * @param  int $start
      * @return Pagination
+     * @throws InvalidParamException
      */
     private function setStart(int $start): Pagination
     {
@@ -64,8 +98,12 @@ class Pagination extends AbstractValueObject
     }
 
     /**
+     * Pagination PerPage Setter.
+     * Holds the business rule related to the perPage property.
+     *
      * @param  int $perPage
      * @return Pagination
+     * @throws InvalidParamException
      */
     private function setPerPage(int $perPage): Pagination
     {
@@ -78,6 +116,8 @@ class Pagination extends AbstractValueObject
     }
 
     /**
+     * Do the structural comparison with another Value Object.
+     *
      * @param  Pagination $object
      * @return bool
      */
