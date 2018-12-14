@@ -50,7 +50,7 @@ $ git clone https://github.com/ianlessa/product-search.git
 $ composer install -vvv
 ```
 
-Before that, configure your server to point correctly to the directory of the repo. After that, proceed to the database settings.
+Then, configure your server to point correctly to the directory of the repo. After that, proceed to the database settings.
 
 ### Database Settings
 ###### [▲ Table of Contents](#table-of-contents) 
@@ -75,7 +75,7 @@ After the database configuration, you must create the required databases and pop
 
 All the SQL required to create the table and populate it is shipped with this repo, in the file [`database_up.sql`](database_up.sql).
 
-Before that, you are ready to test the system.
+Now that all the required configurations are set, you are ready to test the system.
 
 ## Features
 ###### [▲ Table of Contents](#table-of-contents) 
@@ -430,7 +430,7 @@ You can run the tests inside the [docker container](#docker) of this project as 
 #### Integration Tests
 ###### [▲ Tests](#Tests) 
 
-Since the integration tests perform operations in the database you should configure the access to it  
+Since the integration tests performs operations in the database you should configure the access to it  
 in the same way as described on the [Database Settings](#database-settings) section. However, the configurations
 must be made at the [phpunit.xml](phpunit.xml) file, located on the project root. The `<php>` section of the xml
 follows the same principle of the [config.json](app/config/config.json) file: 
