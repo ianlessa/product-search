@@ -46,6 +46,9 @@ The project files are located on the `/app` directory of the container.
 ### About database
 ###### [▲ Table of Contents](#table-of-contents) 
 
+The database used in this project is `MySQL`. All the queries performed in it are 
+made through `PDO Prepared Statement`, in order to prevent SQL Injection exploiting.
+
 The database [config](app/config/config.json) file is a JSON file inside the `/app/config/` directory. The default contents are:
 
 ```JSON
