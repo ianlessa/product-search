@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  test:
+    working_directory: /
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - setup_remote_docker
+      - run:
+          name: Run Docker Hub Image
+          command: docker run -it -d --name product_search ianlessa/product-search
+      - run:
+          name: Wait for db
+          command: sleep 20
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            docker exec -i product_search bash -c "cd /app && curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter"
+            docker exec -i product_search bash -c "cd /app && chmod +x ./cc-test-reporter"
+      - run:
+          name: Run tests
+          command: |
+            docker exec -it product_search bash -c "cd /app && \
+              ./cc-test-reporter before-build && \
+               vendor/bin/phpunit --coverage-clover clover.xml &&\
+              ./cc-test-reporter after-build -r ${CC_TEST_REPORTER_ID} --coverage-input-type clover --exit-code $? \
+            "
+workflows:
+ version: 2
+ test:
+   jobs:
+     - test
