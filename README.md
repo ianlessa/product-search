@@ -84,7 +84,6 @@ This API provides the following features:
 - Sorting
 
 To access the Product Search screen, just head to the webpage root directory on your browser. 
-You can do a live test of the features on my site [http://ianlessa.com](http://ianlessa.com) as well. There you can see the query sended to the API and the results that it retrieves.
 
 ## API
 ###### [▲ Table of Contents](#table-of-contents) 
